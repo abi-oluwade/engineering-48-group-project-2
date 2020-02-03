@@ -94,7 +94,7 @@ Here are the steps we followed to build packer:
 
 
 
-# Mongo Replica Terraform
+## Mongo Replica Terraform
 
 - Terraform configuration for the private subnets and the 3 instances which are to be launched.
 
