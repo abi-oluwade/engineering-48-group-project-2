@@ -1,4 +1,4 @@
-# Multi Avilability Zones
+# Multi Availability Zones
 
 ## Aim:
 - Using Terraform and AWS create a load balanced and auto scaled 2 tier architecture for the node example application.
@@ -27,7 +27,7 @@
 - Ensures you have the correct number of EC2 instances avilable to handle the load of your application
 
 ## Highly Available application
-- Creating your achitecture in such a way that your 'system' is always avaliable - or has the least amount of downtime as possible. 
+- Creating your achitecture in such a way that your 'system' is always avaliable - or has the least amount of downtime as possible.
 
 ## GitHub Approval of Pull Requests
 
