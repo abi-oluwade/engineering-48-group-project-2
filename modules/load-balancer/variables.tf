@@ -17,13 +17,15 @@ variable "app-ami" {
 variable "db_instance-ip" {
   description = "ip of the db instance"
 }
-variable "public_subnet" {
-description = "A list of public subnets"
-type = "list"
-default = []
+variable "app_security_group_id" {
+  description = "this is the security group for app"
 }
-variable "availability_zone" {
-description = "a list of availability_zones"
-type = "list"
-default = []
+variable "app_subnet_one" {
+  description = "this is the first app subnet"
+}
+variable "app_subnet_two" {
+  description = "this is the second app subnet"
+}
+variable "app_subnet_three" {
+  description = "this is the third app subnet"
 }
