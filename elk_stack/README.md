@@ -45,3 +45,13 @@ The requirement for **elasticsearch** and **logstash** is to first install Java.
 In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
 - Used online cookbook to install elastic search
+
+
+## Collaborating with Git and GitHub
+- Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
+- Then merge on your local machine
+- Then push to GitHub
+- **So:**
+  - pull
+  - merge (locally)
+  - push
