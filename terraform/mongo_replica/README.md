@@ -18,45 +18,45 @@ This is a configuration management tool for dealing with machine setup on physic
 In this section we had installed CHEFDK on our machine and had to configure the path to access this tool.
 
 
-1. Creating the Cookbook:
+  1. Creating the Cookbook:
 
-      - command **chef generate cookbook [cookbookname]**
-      - accepting the licence using **echo $CHEF_LICENSE**
+        - command **chef generate cookbook [cookbookname]**
+        - accepting the licence using **echo $CHEF_LICENSE**
 
-2. Configuring the kitchen.yml file:
+  2. Configuring the kitchen.yml file:
 
-  - this is where you build and define the platform you are going to use, this includes; driver, provisioner, verifier, platform, suites.
+    - this is where you build and define the platform you are going to use, this includes; driver, provisioner, verifier, platform, suites.
 
-3. Writing tests for both your unit and integration tests.
+  3. Writing tests for both your unit and integration tests.
 
-  - To run unit tests, use the command:
-      - **chef exec rspec**
+    - To run unit tests, use the command:
+        - **chef exec rspec**
 
-  - To run integration tests, use the command:
-      - **kitchen verify**
+    - To run integration tests, use the command:
+        - **kitchen verify**
 
-4. The recipe file is where we have inserted the commands to run the packages we need, for this project we have used; mongodb and filebeats (this will be taken from the separate repo created and wrapped in the cookbook)
+  4. The recipe file is where we have inserted the commands to run the packages we need, for this project we have used; mongodb and filebeats (this will be taken from the separate repo created and wrapped in the cookbook)
 
-5. Metadata.rb – the contents provide information that helps chef deploy cookbooks to each node.
+  5. Metadata.rb – the contents provide information that helps chef deploy cookbooks to each node.
 
-This is a dependency organiser. The wrapped cookbook will also be called here in order to get access to the github repo made to install filebeats.
-
-
-6. An attribute is a specific detail about a node. This is where we will also be wrapping the cookbook of the filebeats installation, so it doesn’t need to be repeated in the recipe.
-
- Use the command to generate an attribute:
--  **chef generate attribute [name]**
+  This is a dependency organiser. The wrapped cookbook will also be called here in order to get access to the github repo made to install filebeats.
 
 
-7. Templates are used to configure services within mongo and the service it provides.
+  6. An attribute is a specific detail about a node. This is where we will also be wrapping the cookbook of the filebeats installation, so it doesn’t need to be repeated in the recipe.
 
-    Use the command:
-      -	**chef generate template [template name]**
+   Use the command to generate an attribute:
+  -  **chef generate attribute [name]**
 
-8. Create tests to ensure that the templates are being created and used, use the following commands to install and update all the changes being added and changed in the cookbook:
 
-	-  **chef install**
-	-  **chef update**
+  7. Templates are used to configure services within mongo and the service it provides.
+
+      Use the command:
+        -	**chef generate template [template name]**
+
+  8. Create tests to ensure that the templates are being created and used, use the following commands to install and update all the changes being added and changed in the cookbook:
+
+  	-  **chef install**
+  	-  **chef update**
 
 
 ### Packer
@@ -83,9 +83,9 @@ Here are the steps we followed to build packer:
 
 3.	**berks install** - is the command would then create a berks lock file
 
-4.	**berks install** - this is where the dependencies of the package are added so the cookbook has all of them available.
+4. **berks install** - this is where the dependencies of the package are added so the cookbook has all of them available.
 
-5.	You would then validate and build using the following commands:
+5. You would then validate and build using the following commands:
 
     - **packer validate [name of packerfile]**
     - **Packer build [name of packer file]**
