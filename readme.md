@@ -27,7 +27,7 @@
 - Ensures you have the correct number of EC2 instances avilable to handle the load of your application
 
 ## Highly Available application
-- Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible.
+- Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
 
 ## GitHub Approval of Pull Requests
 
