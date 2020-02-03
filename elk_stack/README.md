@@ -45,3 +45,6 @@ The requirement for **elasticsearch** and **logstash** is to first install Java.
 In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
 - Used online cookbook to install elastic search
+
+
+## Collaborating with Git and GitHub
