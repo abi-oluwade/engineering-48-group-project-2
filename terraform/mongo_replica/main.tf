@@ -32,12 +32,18 @@ resource "aws_subnet" "mongo_subnet3" {
   }
 }
 
+# Send template to sh file
+data "template_file" "primary_mongo_init" {
+  template = "${file(".scripts/init_script.sh.tpl")}"
+}
+
 # Launching instances
 resource "aws_instance" "mongo_instance1" {
   ami = var.mongo_ami_id
   subnet_id = aws_subnet.mongo_subnet1.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
+  user_data = data.template_file.primary_mongo_init.rendered
   tags = {
     Name = "${var.db_name} - mongo first instance"
   }
