@@ -17,4 +17,13 @@ mongo 'mongodb://mongodb0,mongodb1,mongodb2/?replicaset=rs0' # Check all replica
 rs.conf() # Check the replica set configuration
 
 # Virtual IP
-A method of using what we call destination net to translate an external device to an internal device
+ With a Virtual IP setup, none of your IP addresses are shown publicly, increasing the security of the deployment. A Virtual IP address is configured with a security group setting that restricts its access to only the internally-routable, private IPs assigned to the VPC.
+
+# Load Balancers
+
+ # Failover
+ In our project, we will be deploying replicating sets of our MongoDB so that they maintain the same data set. In failover, if a private IP address (in our case Virtual IP 10.1.1.5) fails, the application servers continue connecting to standby database node without any intervention so that the failover seems seamless.
+
+
+# EIP
+- Where it fits in?
