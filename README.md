@@ -29,10 +29,18 @@ Advantages:
 
 
 # Failover
-In failover, if a private IP address (in our case Virtual IP 10.1.1.5) fails, the application servers continue connecting to standby database node without any intervention so that the failover seems seamless.
+In failover, if a private IP address fails, the application servers continue connecting to standby database node without any intervention so that the failover seems seamless.
 
-In our project, we will be deploying replicating sets of our MongoDB so that they maintain the same data set. There will be three web-based applications running on three web servers behind a load balancer across three Availability zones (for each MongoDB instance).
+So, in our project, we will be deploying replicating sets of our MongoDB so that they maintain the same data set and keep in sync. There will be three web-based applications running on three web servers behind a load balancer across three Availability zones (for each MongoDB instance).
 
+We'll be running the application on a VPC with a CIDR range of 10.0.0.0/16. There will be six subnets across three availability zones.
+
+The web servers will be configured to query the virtual IP we will be using ( Virtual IP: 10.1.1.5). There will be a DB_Host which is mapped to the virtual IP. This virtual IP will be accomplished by manually 'plumbing' VIP as a logical interface on our three Amazon EC2 instances running the database (DB_Host1, DB_Host2, DB_Host3). Make sure all these instances have "Source/Destination Checks Disabled"
+
+In the routing table, we can create a route to the VIP in the routing table to the instance of DB_Host1. Now all traffic destined for the Virtual IP will go to DB_Host1 therefore making it the primary node for our project.
+
+In order to failover the VIP to the other database servers (DB_Host2 & DB_Host3) a possibility would be to use a Lambda function that triggers every minute using Amazon Cloudwatch Events to check availability of the current DB server and if the primary DB server is unavailable or MySQL is down, it invokes another Lambda function to failover the VIP to the second server, if that's down then the third server.
+You can check which server is currently being run by checking which database instance ID the route table is targetting. 
 
 # EIP
 - Where it fits in?
