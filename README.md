@@ -40,7 +40,9 @@ The web servers will be configured to query the virtual IP we will be using ( Vi
 In the routing table, we can create a route to the VIP in the routing table to the instance of DB_Host1. Now all traffic destined for the Virtual IP will go to DB_Host1 therefore making it the primary node for our project.
 
 In order to failover the VIP to the other database servers (DB_Host2 & DB_Host3) a possibility would be to use a Lambda function that triggers every minute using Amazon Cloudwatch Events to check availability of the current DB server and if the primary DB server is unavailable or MySQL is down, it invokes another Lambda function to failover the VIP to the second server, if that's down then the third server.
-You can check which server is currently being run by checking which database instance ID the route table is targetting. 
+You can check which server is currently being run by checking which database instance ID the route table is targeting.
 
 # EIP
-- Where it fits in?
+An Elastic IP address is a static IPv4 address designed for dynamic cloud computing. An Elastic IP address is associated with your AWS account. With an Elastic IP address, you can mask the failure of an instance or software by rapidly remapping the address to another instance in your account.
+
+An Elastic IP address is a public IPv4 address, which is reachable from the internet. If your instance does not have a public IPv4 address, you can associate an Elastic IP address with your instance to enable communication with the internet; for example, to connect to your instance from your local computer.
