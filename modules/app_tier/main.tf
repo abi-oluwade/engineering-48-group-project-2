@@ -2,10 +2,26 @@
 # place all the concerns for the app tier
 
 # create a subnet
-resource "aws_subnet" "app_subnet"{
+resource "aws_subnet" "app_subnet_1"{
   vpc_id = var.vpc_id
-  cidr_block = "10.0.0.0/24"
+  cidr_block = "10.0.1.0/24"
   availability_zone = "eu-west-1a"
+  tags = {
+    name = var.name
+  }
+}
+resource "aws_subnet" "app_subnet_2"{
+  vpc_id = var.vpc_id
+  cidr_block = "10.0.2.0/24"
+  availability_zone = "eu-west-1b"
+  tags = {
+    name = var.name
+  }
+}
+resource "aws_subnet" "app_subnet_3"{
+  vpc_id = var.vpc_id
+  cidr_block = "10.0.3.0/24"
+  availability_zone = "eu-west-1c"
   tags = {
     name = var.name
   }
@@ -25,7 +41,9 @@ resource "aws_route_table" "app_route_table" {
 
 # route table association
 resource "aws_route_table_association" "app_association"{
-  subnet_id = aws_subnet.app_subnet.id
+  subnet_id = aws_subnet.app_subnet_1.id
+  subnet_id = aws_subnet.app_subnet_2.id
+  subnet_id = aws_subnet.app_subnet_3.id
   route_table_id = aws_route_table.app_route_table.id
 }
 
