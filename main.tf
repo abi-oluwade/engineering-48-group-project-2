@@ -19,6 +19,12 @@ resource "aws_internet_gateway" "app_internet_gateway"{
    }
 }
 
+# launch configuration for auto scaling
+resource "aws_launch_configuration" "app_conf" {
+  name = "app_conf"
+  image_id = var.app-ami-id
+}
+
 # call module to create app tier
 module "app" {
   source = "./modules/app_tier"
