@@ -18,7 +18,7 @@ This is a configuration management tool for dealing with machine setup on physic
 In this section we had installed CHEFDK on our machine and had to configure the path to access this tool.
 
 
-1.  Creating the Cookbook:
+1. Creating the Cookbook:
 
       - command **chef generate cookbook <cookbookname>**
       - accepting the licence using **echo $CHEF_LICENSE**
