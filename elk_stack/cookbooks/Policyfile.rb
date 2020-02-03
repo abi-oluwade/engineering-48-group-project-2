@@ -10,7 +10,7 @@ name 'elk_stack'
 default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
-run_list 'elk_stack::default'
+run_list ['elk_stack::default', 'elk_stack::dashboard']
 
 # Specify a custom source for a single cookbook:
 cookbook 'elk_stack', path: '.'

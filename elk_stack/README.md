@@ -48,3 +48,10 @@ In cookbook:
 
 
 ## Collaborating with Git and GitHub
+- Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
+- Then merge on your local machine
+- Then push to GitHub
+- **So:**
+  - pull
+  - merge (locally)
+  - push
