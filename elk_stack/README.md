@@ -46,6 +46,11 @@ In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
 - Used online cookbook to install elastic search
 
+## Downloading sample dashboard - Cookbook
+- Downloaded Kibana dashboards and Beats index patterns
+- Not using this dashboard but filebeat index pattern in it
+- Loaded a filebeat index template into the elasticsearch
+- The ELK Server is now ready to receive filebeat data
 
 ## Collaborating with Git and GitHub
 - Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
