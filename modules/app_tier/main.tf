@@ -8,7 +8,7 @@ resource "aws_subnet" "public" {
   cidr_block              = "${var.public_subnet[count.index]}"
   availability_zone       = "${var.availability_zone[count.index]}"
   tags = {
-    name = var.name
+    name = var.name-${count.index + 1}
     }
 }
 
@@ -107,6 +107,6 @@ resource "aws_instance" "app_instance"{
   key_name = "Eng-48-common-key"
   user_data = data.template_file.app_init.rendered
   tags = {
-    name = "${var.name}-app instance"
+    name = "${var.name}-app instance-${count.index + 1}"
   }
 }
