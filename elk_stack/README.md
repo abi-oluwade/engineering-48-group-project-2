@@ -4,7 +4,7 @@
 - Elastic stack (formerly know as ELK stack) is a collection of 4 open source products used for **log monitoring and log analytics.**
 - They are all developed, managed and maintained by the company Elastic.
 
-Elastic stack
+#### Elastic stack:
 - Elasticsearch
 - Logstash
 - Kibana
@@ -44,4 +44,4 @@ The requirement for **elasticsearch** and **logstash** is to first install Java.
 ### Installing Elasticsearch -- Cookbook
 In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
-- Used online cookbook to install elastic search 
+- Used online cookbook to install elastic search
