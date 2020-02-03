@@ -3,7 +3,7 @@
 TODO: Enter the cookbook description here.
 
 
-## Sample dashboard
+## Kibana
 - Downloaded Kibana dashboards and Beats index patterns
 - Not using this dashboard but filebeat index pattern in it
 - Loaded a filebeat index template into the elasticsearch
