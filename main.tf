@@ -25,6 +25,18 @@ resource "aws_launch_configuration" "app_conf" {
   image_id = var.app-ami-id
 }
 
+resource "aws_autoscaling_group" "" {
+  name = ""
+  max_size = 6
+  min_size = 3
+  launch_configuration = aws_launch_configuration.app_conf.name
+  vpc_zone_identifier = []
+  target_group_arns = []
+  tags = {
+    Name = var.Name
+  }
+}
+
 # call module to create app tier
 module "app" {
   source = "./modules/app_tier"
@@ -43,16 +55,4 @@ module "db" {
   name = var.Name
   app_security_group_id = module.app.app_security_group_id
   db-ami = var.db-ami-id
-}
-module "load-balancer" {
-  source = "./modules/load-balancer"
-  vpc_id = aws_vpc.app_vpc.id
-  gateway_id = aws_internet_gateway.app_internet_gateway.id
-  name = var.Name
-  app_security_group_id = module.app.app_security_group_id
-  app-ami = var.app-ami-id
-  app_subnet_one = module.app.app_subnet_one
-  app_subnet_two = module.app.app_subnet_two
-  app_subnet_three = module.app.app_subnet_three
-  db_instance-ip = module.db.db_instance-ip
 }
