@@ -2,29 +2,14 @@
 # place all the concerns for the app tier
 
 # create a subnet
-resource "aws_subnet" "app_subnet_1"{
-  vpc_id = var.vpc_id
-  cidr_block = "10.0.1.0/24"
-  availability_zone = "eu-west-1a"
+resource "aws_subnet" "public" {
+  count                   = "${length(var.public_subnet)}"
+  vpc_id                  = "${var.vpc_id}"
+  cidr_block              = "${var.public_subnet[count.index]}"
+  availability_zone       = "${var.availability_zone[count.index]}"
   tags = {
     name = var.name
-  }
-}
-resource "aws_subnet" "app_subnet_2"{
-  vpc_id = var.vpc_id
-  cidr_block = "10.0.2.0/24"
-  availability_zone = "eu-west-1b"
-  tags = {
-    name = var.name
-  }
-}
-resource "aws_subnet" "app_subnet_3"{
-  vpc_id = var.vpc_id
-  cidr_block = "10.0.3.0/24"
-  availability_zone = "eu-west-1c"
-  tags = {
-    name = var.name
-  }
+    }
 }
 
 # route table
@@ -41,9 +26,8 @@ resource "aws_route_table" "app_route_table" {
 
 # route table association
 resource "aws_route_table_association" "app_association"{
-  subnet_id = aws_subnet.app_subnet_1.id
-  subnet_id = aws_subnet.app_subnet_2.id
-  subnet_id = aws_subnet.app_subnet_3.id
+  count = "${length(var.public_subnet)}"
+  subnet_id = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.app_route_table.id
 }
 
@@ -114,8 +98,9 @@ data  "template_file" "app_init" {
 
 # launch an instance
 resource "aws_instance" "app_instance"{
+  count = "${length(var.public_subnet)}"
   ami = var.app-ami
-  subnet_id = aws_subnet.app_subnet.id
+  subnet_id = aws_subnet.public[count.index].id
   vpc_security_group_ids = [aws_security_group.app_security_dm.id]
   instance_type = "t2.micro"
   associate_public_ip_address = true
