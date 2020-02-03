@@ -20,7 +20,7 @@ In this section we had installed CHEFDK on our machine and had to configure the 
 
 1. Creating the Cookbook:
 
-      - command **chef generate cookbook <cookbookname>**
+      - command **chef generate cookbook [cookbookname]**
       - accepting the licence using **echo $CHEF_LICENSE**
 
 2. Configuring the kitchen.yml file:
@@ -45,13 +45,13 @@ This is a dependency organiser. The wrapped cookbook will also be called here in
 6. An attribute is a specific detail about a node. This is where we will also be wrapping the cookbook of the filebeats installation, so it doesn’t need to be repeated in the recipe.
 
  Use the command to generate an attribute:
--  **chef generate attribute <name>**
+-  **chef generate attribute [name]**
 
 
 7. Templates are used to configure services within mongo and the service it provides.
 
-Use the command:
--	**chef generate template <template name>**
+    Use the command:
+      -	**chef generate template [template name]**
 
 8. Create tests to ensure that the templates are being created and used, use the following commands to install and update all the changes being added and changed in the cookbook:
 
@@ -87,8 +87,8 @@ Here are the steps we followed to build packer:
 
 5.	You would then validate and build using the following commands:
 
-    - **packer validate <name of packerfile>**
-    - **Packer build <name of packer file>**
+    - **packer validate [name of packerfile]**
+    - **Packer build [name of packer file]**
 
 ### Manually Configuring the Mongo Replica Sets
 
