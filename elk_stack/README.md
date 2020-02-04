@@ -102,5 +102,5 @@ logstash:
 Each of the ELK stack components has the own cookbooks saved in their individual repository on GitHub.
 - **Filebeat.**
 - **Elasticsearch.** 
-- **Logstash.** https://github.com/harry-sparta/eng-48-logstash
+- **Logstash.** (https://github.com/harry-sparta/eng-48-logstash)
 - **Kibana.**
