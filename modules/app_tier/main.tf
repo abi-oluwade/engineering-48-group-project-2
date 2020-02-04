@@ -5,8 +5,8 @@
 resource "aws_launch_configuration" "app_conf" {
   name = "app_conf"
   instance_type = "t2.micro"
-  image_id = var.app-ami-id
-  security_groups = aws_security_group.app_security_dm.id
+  image_id = var.app-ami
+  security_groups = [aws_security_group.app_security_dm.id]
 }
 
 resource "aws_autoscaling_group" "app_autoscaling" {
@@ -15,11 +15,11 @@ resource "aws_autoscaling_group" "app_autoscaling" {
   min_size = 3
   launch_configuration = aws_launch_configuration.app_conf.name
   vpc_zone_identifier = [aws_subnet.public_one.id,aws_subnet.public_two.id,aws_subnet.public_three.id]
-  target_group_arns = []
+  target_group_arns = [var.aws_lb_target_group-id]
 
-  tags = {
-    Name = var.Name
-  }
+  # tags = {
+  #  name = var.name
+  # }
 }
 
 # create a subnet

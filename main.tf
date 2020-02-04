@@ -27,6 +27,7 @@ module "app" {
   db_instance-ip = module.db.db_instance-ip
   name = var.Name
   app-ami = var.app-ami-id
+  aws_lb_target_group-id = module.load_balancer.aws_lb_target_group-id
 }
 
 # call module to create db tier
