@@ -1,6 +1,11 @@
 variable "Name" {
   type    = string
-  default = "Eng48"
+  default = "Eng48-app"
+}
+
+variable "db_name" {
+  type = string
+  default = "Eng48-mongo"
 }
 
 variable "app-ami-id" {
@@ -10,5 +15,5 @@ variable "app-ami-id" {
 
 variable "db-ami-id" {
   type = string
-  default = "ami-0983c8db834b7437c"
+  default = "ami-06a921b5d278c458b"
 }
