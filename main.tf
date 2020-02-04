@@ -57,8 +57,8 @@ module "db" {
   app_security_group_id = module.app.app_security_group_id
   db-ami = var.db-ami-id
 }
-module "load-balancer" {
-  source = "./modules/load-balancer"
+module "load_balancer" {
+  source = "./modules/load_balancer"
   vpc_id = aws_vpc.app_vpc.id
   gateway_id = aws_internet_gateway.app_internet_gateway.id
   name = var.Name
