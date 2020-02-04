@@ -46,6 +46,42 @@ In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
 - Used online cookbook to install elastic search
 
+### Installing and configuring Filebeat
+- A chef cookbook was used to install filebeat and its dependencies
+- The recipe for this cookbook has the code:
+
+````
+include_recipe 'apt'
+
+bash 'install_filebeat' do
+  user 'root'
+  code <<-EOH
+  echo "deb https://packages.elastic.co/beats/apt stable main" | sudo tee -a /etc/apt/sources.list.d/beats.list
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
+  sudo apt-get update && sudo apt-get install filebeat
+  sudo /etc/init.d/filebeat start
+  EOH
+end
+````
+- with ``depends 'apt'`` in the metadata.rb file
+- To configure Filebeat the template module was used as follows:
+
+````
+template '/etc/filebeat/filebeat.yml' do
+  source 'filebeat.yml.erb'
+end
+
+execute 'restart Filebeat' do
+  command 'sudo /etc/init.d/filebeat restart'
+end
+````
+- The default filebeat.yml file was kept the same with the exception of the logstash output section which was changed:
+````
+### Logstash as output
+logstash:
+  # The Logstash hosts
+  hosts: ["0.0.0.0:5044"]
+````
 
 ## Collaborating with Git and GitHub
 - Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
