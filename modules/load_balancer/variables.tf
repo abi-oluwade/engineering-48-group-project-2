@@ -33,6 +33,6 @@ variable "app_subnet_three" {
   description = "this is the third app subnet"
 }
 
-variable "app_instance" {
-  description = "this is the app instance from the app module"
-}
+#variable "app_instance" {
+#  description = "this is the app instance from the app module"
+#}
