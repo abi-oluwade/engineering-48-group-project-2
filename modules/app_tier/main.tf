@@ -1,6 +1,27 @@
 # Main for app tier
 # place all the concerns for the app tier
 
+# launch configuration for auto scaling
+resource "aws_launch_configuration" "app_conf" {
+  name = "app_conf"
+  instance_type = "t2.micro"
+  image_id = var.app-ami
+  security_groups = [aws_security_group.app_security_dm.id]
+}
+
+resource "aws_autoscaling_group" "app_autoscaling" {
+  name = "Eng-48-autoscaling"
+  max_size = 6
+  min_size = 3
+  launch_configuration = aws_launch_configuration.app_conf.name
+  vpc_zone_identifier = [aws_subnet.public_one.id,aws_subnet.public_two.id,aws_subnet.public_three.id]
+  target_group_arns = [var.aws_lb_target_group-id]
+
+  # tags = {
+  #  name = var.name
+  # }
+}
+
 # create a subnet
 resource "aws_subnet" "public" {
   count                   = "${length(var.public_subnet)}"
@@ -22,7 +43,7 @@ resource "aws_subnet" "public_one"{
 resource "aws_subnet" "public_two"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.2.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = "eu-west-1b"
   tags = {
     name = var.name
   }
@@ -30,7 +51,7 @@ resource "aws_subnet" "public_two"{
 resource "aws_subnet" "public_three"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.3.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = "eu-west-1c"
   tags = {
     name = var.name
   }
