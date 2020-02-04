@@ -7,6 +7,8 @@ resource "aws_launch_configuration" "app_conf" {
   instance_type = "t2.micro"
   image_id = var.app-ami
   security_groups = [aws_security_group.app_security_dm.id]
+  associate_public_ip_address = true
+  key_name = "Eng-48-common-key"
 }
 
 resource "aws_autoscaling_group" "app_autoscaling" {
@@ -30,8 +32,9 @@ resource "aws_subnet" "public" {
   availability_zone       = "${var.availability_zone[count.index]}"
   tags = {
     name = "${var.name}-app-subnet-${count.index + 1}"
-    }
+  }
 }
+
 resource "aws_subnet" "public_one"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.1.0/24"
