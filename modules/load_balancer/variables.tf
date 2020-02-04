@@ -20,6 +20,9 @@ variable "db_instance-ip" {
 variable "app_security_group_id" {
   description = "this is the security group for app"
 }
+#variable "subnet_groups" {
+#  description = "the group of app subnets"
+#}
 variable "app_subnet_one" {
   description = "this is the first app subnet"
 }

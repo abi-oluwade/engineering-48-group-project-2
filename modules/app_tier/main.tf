@@ -14,7 +14,7 @@ resource "aws_autoscaling_group" "app_autoscaling" {
   max_size = 6
   min_size = 3
   launch_configuration = aws_launch_configuration.app_conf.name
-  vpc_zone_identifier = [aws_subnet.public.id]
+  vpc_zone_identifier = [aws_subnet.public_one.id,aws_subnet.public_two.id,aws_subnet.public_three.id]
   target_group_arns = []
 
   tags = {
@@ -32,7 +32,36 @@ resource "aws_subnet" "public" {
     name = "${var.name}-app-subnet-${count.index + 1}"
     }
 }
-
+resource "aws_subnet" "public_one"{
+  vpc_id = var.vpc_id
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "eu-west-1a"
+  tags = {
+    name = var.name
+  }
+}
+resource "aws_subnet" "public_two"{
+  vpc_id = var.vpc_id
+  cidr_block = "10.0.2.0/24"
+  availability_zone = "eu-west-1a"
+  tags = {
+    name = var.name
+  }
+}
+resource "aws_subnet" "public_three"{
+  vpc_id = var.vpc_id
+  cidr_block = "10.0.3.0/24"
+  availability_zone = "eu-west-1a"
+  tags = {
+    name = var.name
+  }
+}
+resource "aws_db_subnet_group" "subnets" {
+  name = "subnet_groups"
+  count = "${length(var.public_subnet)}"
+  subnet_ids = ["${aws_subnet.public_one}","${aws_subnet.public_two}","${aws_subnet.public_three}"]
+#  subnet_ids = ["${aws_subnet.public[count.index]}"]
+}
 # route table
 resource "aws_route_table" "app_route_table" {
   vpc_id = var.vpc_id
@@ -46,9 +75,20 @@ resource "aws_route_table" "app_route_table" {
 }
 
 # route table association
-resource "aws_route_table_association" "app_association"{
-  count = "${length(var.public_subnet)}"
-  subnet_id = aws_subnet.public[count.index].id
+resource "aws_route_table_association" "app_association_one"{
+  #count = "${length(var.public_subnet)}"
+  subnet_id = aws_subnet.public_one.id
+  #subnet_id = ["${aws_subnet.public_one}","${aws_subnet.public_two}","${aws_subnet.public_three}"]
+  route_table_id = aws_route_table.app_route_table.id
+}
+resource "aws_route_table_association" "app_association_two"{
+  #count = "${length(var.public_subnet)}"
+  subnet_id = aws_subnet.public_two.id
+  route_table_id = aws_route_table.app_route_table.id
+}
+resource "aws_route_table_association" "app_association_three"{
+  #count = "${length(var.public_subnet)}"
+  subnet_id = aws_subnet.public_three.id
   route_table_id = aws_route_table.app_route_table.id
 }
 

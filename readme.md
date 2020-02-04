@@ -29,6 +29,10 @@
 ## Highly Available application
 - Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
 
+## Deployment - Set up
+- 
+
+
 # GitHub
 
 ### GitHub Approval of Pull Requests
