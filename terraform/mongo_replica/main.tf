@@ -68,3 +68,37 @@ resource "aws_instance" "mongo_instance3" {
     Name = "${var.db_name} - mongo third instance"
   }
 }
+
+# Route table associations
+resource "aws_route_table_association" "db_assoc" {
+  subnet_id = aws_subnet.mongo_subnet1.id
+  route_table_id = aws_route_table.db_route.id
+}
+
+
+# Security Groups
+resource "aws_security_group" "db_security_group" {
+  ## LINK VPC vpc_id      = var.vpc_id
+  description = "Allow traffic from app"
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    security_groups = ["${var.app_security_group_id}"]
+  }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    security_groups = ["${var.app_security_group_id}"]
+  }
+  egress {
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${var.db_name} - Security group"
+  }
+}

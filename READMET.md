@@ -1,4 +1,4 @@
-# Notes (MAY OR MAY NOT BE USED)
+ls# Notes (MAY OR MAY NOT BE USED)
 
 # Initiate Mongod replicas
 rs.initiate( {
