@@ -49,7 +49,7 @@ resource "aws_instance" "db_instance"{
   subnet_id = aws_subnet.db_subnet.id
   vpc_security_group_ids = [var.app_security_group_id]
   instance_type = "t2.micro"
-  key_name = "rahavi-eng-48-first-key"
+  key_name = "Eng-48-common-key"
   associate_public_ip_address = true
   tags = {
     name = "${var.name}-db"
