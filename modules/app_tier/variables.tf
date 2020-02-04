@@ -17,4 +17,17 @@ variable "app-ami" {
 variable "db_instance-ip" {
   description = "ip of the db instance"
 }
- 
+variable "public_subnet" {
+description = "A list of public subnets"
+type = list
+default = []
+}
+variable "availability_zone" {
+description = "a list of availability_zones"
+type = "list"
+default = []
+}
+
+variable "aws_lb_target_group-id" {
+  description = ""
+}
