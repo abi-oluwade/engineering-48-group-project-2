@@ -31,8 +31,8 @@ resource "aws_lb_target_group" "app_tg" {
   vpc_id   = var.vpc_id
 }
 
-resource "aws_lb_target_group_attachment" "app_tg_attach" {
-  target_group_arn = aws_lb_target_group.app_tg.arn
-  target_id        = "var.app_instance"
-  port             = 80
-}
+#resource "aws_lb_target_group_attachment" "app_tg_attach" {
+#  target_group_arn = aws_lb_target_group.app_tg.arn
+#  target_id        = "var.app_autoscaling"
+#  port             = 80
+#}
