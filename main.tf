@@ -22,6 +22,7 @@ resource "aws_internet_gateway" "app_internet_gateway"{
 # launch configuration for auto scaling
 resource "aws_launch_configuration" "app_conf" {
   name = "app_conf"
+  instance_type = "t2.micro"
   image_id = var.app-ami-id
 }
 
