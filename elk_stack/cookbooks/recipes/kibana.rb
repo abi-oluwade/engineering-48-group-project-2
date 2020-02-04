@@ -1,51 +1,42 @@
-execute 'install unzip' do
-  command 'apt-get install unzip'
-  action :run
+apt_update "update_sources" do
+  action :update
 end
 
-execute 'install curl' do
-  command 'apt-get install curl'
+package "openjdk-8-jdk" do
+  action :install
+end
+# the package for java 8
+
+bash 'add-bash-https' do
+  code 'wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -'
   action :run
 end
+# We need to sign all of our packages with the Elastic Signing Key
 
-execute 'beats dashboard download' do
-  command 'curl -L -O https://download.elastic.co/beats/dashboards/beats-dashboards-1.1.0.zip'
-  action :run
+package "apt-transport-https" do
+  action :install
+end
+# You need to install the apt-transport-https package on Debian before proceeding
+
+apt_repository 'information-keys' do
+  uri        'https://artifacts.elastic.co/packages/6.x/apt'
+  distribution "stable"
+  components ["main"]
+  action :add
+end
+# We need to store the keys of the https package
+
+package "kibana" do
+  action :install
 end
 
-execute 'unzip' do
-  command 'unzip beats-dashboards-1.1.0.zip'
-  action :run
+service 'kibana' do
+  action :enable
+end
+service 'kibana' do
+  action :start
 end
 
-execute 'run beats' do
-  command 'cd beats-dashboards-1.1.0 # ./load.sh'
-  action :run
-end
-
-execute 'filebeat template' do
-  command 'curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json'
-  action :run
-end
-
-execute 'filebeat verify' do
-  command 'curl -XPUT http://212.161.55.68/_template/filebeat?pretty -d@filebeat-index-template.json'
-  action :run
-end
-
-bash 'kibana' do
-  code <<-EOH
-  cd /opt
-  sudo wget https://download.elastic.co/kibana/kibana/kibana-4.5.3-linux-x64.tar.gz
-  sudo tar -xzf kibana-4.5.3-linux-x64.tar.gz
-  sudo mv kibana-4.5.3-linux-x64 kibana
-  cd /opt/kibana/bin
-  ./kibana
-  netstat -pltn
-  sudo apt-get install ruby -y
-  sudo gem install package pleaserun
-  pleaserun -p systemd -v default –install /opt/kibana/bin/kibana -p 5601 -H 0.0.0.0 -e http://localhost:9200
-  systemctl start kibana
-  systemctl status kibana
-  EOH
+template '/etc/kibana/kibana.yml' do
+  source 'kibana.yml.erb'
 end

@@ -29,3 +29,14 @@ end
 describe port(9200), : do
   it { should be_listening }
 end
+
+describe package("kibana") do
+  it { should be_installed }
+  its('version') { should match /6.8\./  }
+end
+
+# service enable
+describe service "kibana" do
+  it { should be_enabled }
+  it { should be_running }
+end
