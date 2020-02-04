@@ -37,9 +37,37 @@ data "template_file" "primary_mongo_init" {
   template = "${file(".scripts/init_script.sh.tpl")}"
 }
 
+# Security Groups
+resource "aws_security_group" "db_security_group" {
+  ## LINK VPC vpc_id      = var.vpc_id
+  description = "Allow traffic from app"
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    # LINK APP security_groups = ["${var.app_security_group_id}"]
+  }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    # LINK APP security_groups = ["${var.app_security_group_id}"]
+  }
+  egress {
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "${var.db_name} - Security group"
+  }
+}
+
 # Launching instances
 resource "aws_instance" "mongo_instance1" {
   ami = var.mongo_ami_id
+  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
   subnet_id = aws_subnet.mongo_subnet1.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
@@ -51,6 +79,7 @@ resource "aws_instance" "mongo_instance1" {
 
 resource "aws_instance" "mongo_instance2" {
   ami = var.mongo_ami_id
+  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
   subnet_id = aws_subnet.mongo_subnet2.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
@@ -61,6 +90,7 @@ resource "aws_instance" "mongo_instance2" {
 
 resource "aws_instance" "mongo_instance3" {
   ami = var.mongo_ami_id
+  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
   subnet_id = aws_subnet.mongo_subnet3.id
   instance_type = "t2.micro"
   associate_public_ip_address = true
@@ -69,36 +99,8 @@ resource "aws_instance" "mongo_instance3" {
   }
 }
 
-# Route table associations
+# Route table associations - Not sure
 resource "aws_route_table_association" "db_assoc" {
   subnet_id = aws_subnet.mongo_subnet1.id
-  route_table_id = aws_route_table.db_route.id
-}
-
-
-# Security Groups
-resource "aws_security_group" "db_security_group" {
-  ## LINK VPC vpc_id      = var.vpc_id
-  description = "Allow traffic from app"
-  ingress {
-    from_port   = 27017
-    to_port     = 27017
-    protocol    = "tcp"
-    security_groups = ["${var.app_security_group_id}"]
-  }
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    security_groups = ["${var.app_security_group_id}"]
-  }
-  egress {
-  from_port = 0
-  to_port = 0
-  protocol = "-1"
-  cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "${var.db_name} - Security group"
-  }
+  route_table_id = aws_route_table.app_route.id
 }

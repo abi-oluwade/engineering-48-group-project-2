@@ -5,5 +5,5 @@ variable "db_name" {
 
 variable "mongo_ami_id" {
   type = string
-  default = "ami-04a0c828d34a4287a"
+  default = "ami-06a921b5d278c458b"
 }
