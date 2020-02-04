@@ -23,15 +23,15 @@ resource "aws_autoscaling_group" "app_autoscaling" {
 }
 
 # create a subnet
-resource "aws_subnet" "public" {
-  count                   = "${length(var.public_subnet)}"
-  vpc_id                  = "${var.vpc_id}"
-  cidr_block              = "${var.public_subnet[count.index]}"
-  availability_zone       = "${var.availability_zone[count.index]}"
-  tags = {
-    name = "${var.name}-app-subnet-${count.index + 1}"
-    }
-}
+# resource "aws_subnet" "public" {
+#  count                   = "${length(var.public_subnet)}"
+#  vpc_id                  = "${var.vpc_id}"
+#  cidr_block              = "${var.public_subnet[count.index]}"
+#  availability_zone       = "${var.availability_zone[count.index]}"
+#  tags = {
+#    name = "${var.name}-app-subnet-${count.index + 1}"
+#    }
+# }
 resource "aws_subnet" "public_one"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.1.0/24"
