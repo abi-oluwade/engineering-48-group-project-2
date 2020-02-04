@@ -5,6 +5,8 @@ resource "aws_lb" "app_lb" {
   load_balancer_type = "application"
   security_groups    = ["${var.app_security_group_id}"]
   subnets            = [var.app_subnet_one, var.app_subnet_two, var.app_subnet_three]
+  #subnets            = [var.subnet_groups]
+
   enable_deletion_protection = false
   tags = {
     Name = var.name
