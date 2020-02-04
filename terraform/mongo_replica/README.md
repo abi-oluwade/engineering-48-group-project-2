@@ -90,10 +90,25 @@ Here are the steps we followed to build packer:
     - **packer validate [name of packerfile]**
     - **Packer build [name of packer file]**
 
-### Manually Configuring the Mongo Replica Sets
+## MongoDB Base AMI
 
+Using Chef and Packer, an AMI was created to provision the 3 MongoDB instances. This cookbook can be found in a separate repo [here](https://github.com/josephpontin/devops-final-db-base-ami). This AMI:
+  - Install MongoDB
+  - Adds a Mongo keyfile to authenticate the connection between the DBs
+  - Configures the DBs to listen on the appropriate port.
 
+## Further configuration for Primary DB
 
+Once the three DB instances have been launched, a bash script is ran on one of them to designate it as the primary instance.
+This script runs the following command in the Mongo shell:
+
+```
+rs.initiate({_id: "rs0", members: [{_id: 0, host: "<private_ip_1>:27017"}, {_id: 1, host:"<private_ip_2>:27017"}, {_id: 2, host: "<private_ip_3>:27017"}]})
+```
+
+The first private ip is that of the primary (on which this is ran), and the second and third are those of the two secondaries.
+
+This completes the configuration of the replica set.
 
 ## Mongo Replica Terraform
 
