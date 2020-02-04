@@ -23,15 +23,15 @@ resource "aws_autoscaling_group" "app_autoscaling" {
 }
 
 # create a subnet
-resource "aws_subnet" "public" {
-  count                   = "${length(var.public_subnet)}"
-  vpc_id                  = "${var.vpc_id}"
-  cidr_block              = "${var.public_subnet[count.index]}"
-  availability_zone       = "${var.availability_zone[count.index]}"
-  tags = {
-    name = "${var.name}-app-subnet-${count.index + 1}"
-    }
-}
+#resource "aws_subnet" "public" {
+#  count                   = "${length(var.public_subnet)}"
+#  vpc_id                  = "${var.vpc_id}"
+#  cidr_block              = "${var.public_subnet[count.index]}"
+#  availability_zone       = "${var.availability_zone[count.index]}"
+#  tags = {
+#    name = "${var.name}-app-subnet-${count.index + 1}"
+#    }
+#}
 resource "aws_subnet" "public_one"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.1.0/24"
@@ -158,16 +158,16 @@ data  "template_file" "app_init" {
 }
 
 # launch an instance
-resource "aws_instance" "app_instance"{
-  count = "${length(var.public_subnet)}"
-  ami = var.app-ami
-  subnet_id = aws_subnet.public[count.index].id
-  vpc_security_group_ids = [aws_security_group.app_security_dm.id]
-  instance_type = "t2.micro"
-  associate_public_ip_address = true
-  key_name = "Eng-48-common-key"
-  user_data = data.template_file.app_init.rendered
-  tags = {
-    name = "${var.name}-app_instance-${count.index + 1}"
-  }
-}
+#resource "aws_instance" "app_instance"{
+#  count = "${length(var.public_subnet)}"
+#  ami = var.app-ami
+#  subnet_id = aws_subnet.public[count.index].id
+#  vpc_security_group_ids = [aws_security_group.app_security_dm.id]
+#  instance_type = "t2.micro"
+#  associate_public_ip_address = true
+#  key_name = "Eng-48-common-key"
+#  user_data = data.template_file.app_init.rendered
+#  tags = {
+#    name = "${var.name}-app_instance-${count.index + 1}"
+#  }
+#}
