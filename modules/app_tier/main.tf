@@ -43,7 +43,7 @@ resource "aws_subnet" "public_one"{
 resource "aws_subnet" "public_two"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.2.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = "eu-west-1b"
   tags = {
     name = var.name
   }
@@ -51,7 +51,7 @@ resource "aws_subnet" "public_two"{
 resource "aws_subnet" "public_three"{
   vpc_id = var.vpc_id
   cidr_block = "10.0.3.0/24"
-  availability_zone = "eu-west-1a"
+  availability_zone = "eu-west-1c"
   tags = {
     name = var.name
   }
