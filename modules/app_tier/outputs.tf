@@ -19,7 +19,7 @@ output "app_subnet_three" {
 #  value = aws_db_subnet_group.subnets[0].id
 #}
 
-output "app_instance" {
+output "app_autoscaling" {
   description = "these are the app instances"
-  value = aws_instance.app_instance
-}
+  value = aws_autoscaling_group.app_autoscaling
+ }
