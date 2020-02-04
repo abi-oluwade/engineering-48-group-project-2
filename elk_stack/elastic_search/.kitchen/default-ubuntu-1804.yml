@@ -1,7 +1,0 @@
----
-hostname: 127.0.0.1
-port: '2200'
-username: vagrant
-ssh_key: C:/opscode/cookbooks/elk_stack/.kitchen/kitchen-vagrant/default-ubuntu-1804/.vagrant/machines/default/virtualbox/private_key
-last_action: setup
-last_error: 
