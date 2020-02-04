@@ -14,3 +14,8 @@ output "app_subnet_three" {
   description = "this is the 3rd subnet"
   value = aws_subnet.public[2].id
 }
+
+output "app_instance" {
+  description = "these are the app instances"
+  value = aws_instance.app_instance
+}

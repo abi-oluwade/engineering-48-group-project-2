@@ -1,9 +1,9 @@
-# Multi Avilability Zones
+# Multi Availability Zones
 
 ## Aim:
 - Using Terraform and AWS create a load balanced and auto scaled 2 tier architecture for the node example application.
 - The Architecture should be a "Highly Available" application.
-- Meaning that it has redundancies across all three availabililty zones.The application should connect to a single database instance.
+- Meaning that it has redundancies across all three availability zones. The application should connect to a single database instance.
 
 ## Application Load Balancer
 - Best suited for load balancing of HTTP and HTTPS traffic
@@ -27,7 +27,7 @@
 - Ensures you have the correct number of EC2 instances avilable to handle the load of your application
 
 ## Highly Available application
-- Creating your achitecture in such a way that your 'system' is always avaliable - or has the least amount of downtime as possible. 
+- Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
 
 ## GitHub Approval of Pull Requests
 
@@ -49,5 +49,5 @@ merge.
 ### Pull Before Merging
 When wanting to make a merge to a lower branch, you should pull from that
 branch onto yours before then merging and pushing the changes to GitHub. This
-will help prevent mrge conflicts that can cause some problems if left
+will help prevent merge conflicts that can cause some problems if left
 unchecked.

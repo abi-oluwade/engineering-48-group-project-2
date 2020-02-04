@@ -29,8 +29,6 @@ resource "aws_security_group" "app_security_dm" {
     from_port   = 27017
     to_port     = 27017
     protocol    = "tcp"
-    # Please restrict your ingress to only necessary IPs and ports.
-    # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
     security_groups = [var.app_security_group_id]
   }
 
@@ -51,9 +49,9 @@ resource "aws_instance" "db_instance"{
   subnet_id = aws_subnet.db_subnet.id
   vpc_security_group_ids = [var.app_security_group_id]
   instance_type = "t2.micro"
-  key_name = "Eng-48-common-key"
+  key_name = "rahavi-eng-48-first-key"
   associate_public_ip_address = true
   tags = {
-    name = "${var.name}-db instance"
+    name = "${var.name}-db"
   }
 }
