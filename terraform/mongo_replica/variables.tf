@@ -1,6 +1,6 @@
 variable "db_name" {
   type = string
-  default = "mongo"
+  default = "mongo-database"
 }
 
 variable "mongo_ami_id" {
