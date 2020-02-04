@@ -29,8 +29,12 @@
 ## Highly Available application
 - Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
 
-## Deployment - Set up
-- 
+## Set up
+- The load balancer resource is setup to redirect traffic to the app servers that are online. If there is a failure in the main availability zone then the primary app server will fail too. The downtime that will result from this is prevented by the autoscaling group.
+
+- We have created an autoscaling group resource on Terraform. This resource is configured to deploy minimum of 3 and maximum of 6 App instances across three availability zones. This means, in the case of a failure another app instance will get deployed and replaced the one that has failed. This makes our architecture "Highly Available".
+
+ - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
 
 
 # GitHub
