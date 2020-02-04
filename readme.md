@@ -29,7 +29,9 @@
 ## Highly Available application
 - Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
 
-## GitHub Approval of Pull Requests
+# GitHub
+
+### GitHub Approval of Pull Requests
 
 When you've made changes to the code on your personal branch, commit it and
 push it to GitHub. From there, go onto your branch on the GitHub repo and
