@@ -19,25 +19,6 @@ resource "aws_internet_gateway" "app_internet_gateway"{
    }
 }
 
-# launch configuration for auto scaling
-resource "aws_launch_configuration" "app_conf" {
-  name = "app_conf"
-  instance_type = "t2.micro"
-  image_id = var.app-ami-id
-}
-
-resource "aws_autoscaling_group" "" {
-  name = ""
-  max_size = 6
-  min_size = 3
-  launch_configuration = aws_launch_configuration.app_conf.name
-  vpc_zone_identifier = []
-  target_group_arns = []
-  tags = {
-    Name = var.Name
-  }
-}
-
 # call module to create app tier
 module "app" {
   source = "./modules/app_tier"
