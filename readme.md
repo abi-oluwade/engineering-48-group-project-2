@@ -1,5 +1,5 @@
 # Multi Availability Zones
-
+![](assets/readme-ca0f2051.png)
 ## Aim:
 - Using Terraform and AWS create a load balanced and auto scaled 2 tier architecture for the node example application.
 - The Architecture should be a "Highly Available" application.
