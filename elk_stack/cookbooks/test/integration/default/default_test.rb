@@ -11,6 +11,21 @@ unless os.windows?
 end
 
 # This is an example test, replace it with your own test.
-describe port(80), :skip do
-  it { should_not be_listening }
+describe service 'elasticsearch' do
+  it { should be_running }
+  it { should be_enabled }
+end
+
+describe service 'logstash' do
+  it { should be_running }
+  it { should be_enabled }
+end
+
+# describe service 'kibana' do
+#   it { should be_running }
+#   it { should be_enabled }
+# end
+
+describe port(9200), : do
+  it { should be_listening }
 end
