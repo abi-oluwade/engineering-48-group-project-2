@@ -14,7 +14,7 @@ variable "app-ami" {
   description = "the ami id of which the app is launches"
 }
 
-variable "db_instance-ip" {
+variable "db_instance_ip1" {
   description = "ip of the db instance"
 }
 variable "app_security_group_id" {
