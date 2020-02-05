@@ -10,7 +10,13 @@
     5. [Highly Available Application](#highly-available-application)
     6. [Set Up](#set-up)
 
-2. [MongoDB Replica Set](#MongoDB-Replica-Set)
+2. [MongoDB Replica Set](#mongodb-replica-set)
+    1. [Creating an AMI](#creating-an-ami)
+        * [Chef](#chef)
+        * [Packer](#packer)
+    2. [MongoDB Base AMI](#mongodb-base-ami)
+    3. [Further Configuration for Primary DB](#primary-db-config)
+    4. [Mongo Replica Terraform](#mongo-rep-terraform)
 3. [ELK Stack](#ELK-Stack)
 4. [GitHub](#GitHub)
 
@@ -60,7 +66,7 @@ Advantages:
 
 - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
 
-# MongoDB Replica Set
+# <a name="mongodb-replica-set"> MongoDB Replica Set </a>
 
    This is what our replica set visually looks like:
 
@@ -68,12 +74,12 @@ Advantages:
 
  Below are the steps that we carried out in order to create this replica set.
 
-## Creating an Ami
+## <a name="creating-an-ami"> Creating an Ami </a>
 
  To create an AMI we used two tools; CHEF and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
 
 
-### Chef
+### <a name="chef"> Chef </chef>
 
  This is a configuration management tool for dealing with machine setup on physical servers, vm’s and in the cloud.
 
@@ -121,7 +127,7 @@ Advantages:
  	-  `chef update`
 
 
-### Packer
+### <a mane="packer"> Packer </a>
 
  Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration. This runs on every major operating system and is highly performant.
 
@@ -152,14 +158,14 @@ Advantages:
      - `packer validate [name of packerfile]`
      - `Packer build [name of packer file]`
 
-## MongoDB Base AMI
+## <a name="mongodb-base-ami"> MongoDB Base AMI </a>
 
  Using Chef and Packer, an AMI was created to provision the 3 MongoDB instances. This cookbook can be found in a separate repo [here](https://github.com/josephpontin/devops-final-db-base-ami). This AMI:
    - Install MongoDB
    - Adds a Mongo keyfile to authenticate the connection between the DBs
    - Configures the DBs to listen on the appropriate port.
 
-## Further configuration for Primary DB
+## <a name="primary-db-config"> Further Configuration for Primary DB </a>
 
  Once the three DB instances have been launched, a bash script is ran on one of them to designate it as the primary instance.
  This script runs the following command in the Mongo shell:
@@ -172,7 +178,7 @@ Advantages:
 
  This completes the configuration of the replica set.
 
-## Mongo Replica Terraform
+## <a name="mongo-rep-terraform"> Mongo Replica Terraform </a>
 
  - Terraform configuration for the private subnets and the 3 instances which are to be launched.
 
