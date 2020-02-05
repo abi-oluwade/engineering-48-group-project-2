@@ -103,4 +103,5 @@ Each of the ELK stack components has the own cookbooks saved in their individual
 - **Filebeat.**
 - **Elasticsearch.** 
 - **Logstash.** (https://github.com/harry-sparta/eng-48-logstash)
-- **Kibana.**
+- **Kibana.** (https://github.com/swatson2019/Eng-48-Kibana)
+- **Nginx.** (https://github.com/swatson2019/Eng-48-Nginx)
