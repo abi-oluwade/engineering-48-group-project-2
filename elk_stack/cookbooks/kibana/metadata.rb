@@ -20,5 +20,3 @@ depends 'elasticsearch', '<= 2.3.5'
 # a Supermarket.
 #
 # source_url 'https://github.com/<insert_org_here>/elk_stack'
-
-depends 'apt'

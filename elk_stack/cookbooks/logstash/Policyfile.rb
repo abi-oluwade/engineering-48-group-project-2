@@ -11,7 +11,7 @@ default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
 
-run_list ['elk_stack::nginx']
+run_list ['elk_stack::logstash']
 
 
 # Specify a custom source for a single cookbook:
