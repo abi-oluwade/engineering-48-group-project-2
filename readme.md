@@ -1,5 +1,12 @@
 # Table of Contents
-1. [Multi Availability Zones](#multi-availability-zones)
+
+1. [The Project](#project)
+
+
+2. [How to Run the Project](#how-to-run-project)
+
+
+3. [Multi Availability Zones](#multi-availability-zones)
     1. [Aim](#aim)
     2. [Application Load Balancer](#application-load-balancer)
     3. [Components](#components)
@@ -10,7 +17,8 @@
     5. [Highly Available Application](#highly-available-application)
     6. [Set Up](#set-up)
 
-2. [MongoDB Replica Set](#mongodb-replica-set)
+
+4. [MongoDB Replica Set](#mongodb-replica-set)
     1. [Creating an AMI](#creating-an-ami)
         * [Chef](#chef)
         * [Packer](#packer)
@@ -18,7 +26,8 @@
     3. [Further Configuration for Primary DB](#primary-db-config)
     4. [Mongo Replica Terraform](#mongo-rep-terraform)
 
-3. [ELK Stack](#elk-stack)
+
+5. [ELK Stack](#elk-stack)
     1. [What is the Elastic Stack?](#what-is-elk)
     2. [Elastic Stack](#elk)
         * [Elasticsearch](#elasticsearch)
@@ -30,8 +39,16 @@
         * [Installing Elasticsearch -- Cookbook](#elasticsearch-install)
     5. [Collaborating with Git and GitHub](#githib-colab)
     6. [General Guidline](#guidline)
-    
-4. [GitHub](#github)
+
+
+6. [GitHub](#github)
+
+# <a name="project"> The Project </a>
+This project's goal was to bring together everything we have learned in DevOps over the last six weeks, and to incorporate three new concepts into working infrastructure as code. These concepts are multiple availability zones, MongoDB replica sets, and an ELK stack.
+
+The web apps, the face of the architecture, have been made into three copies and put in three separate availability zones. The traffic to these apps is managed by a load balancer on the internet gateway, and autoscaling controls the number of instances that are live at one time depending on how much traffic is hitting the apps. These apps in turn talk to the MongoDB replica stack, housed inside one availability zone. This stack is a group of three replicated databases; one is the primary, the others are secondary. The web apps talk to the primary database, and if it goes down for whatever reason, one of the secondary databases will become the primary and take over the role. The status of the apps and the databases are monitored by the ELK stack. The ELK stack is made up of four components: Filebeats, Logstash, Elasticsearch, and Kibana. These parts form a structure that gathers data from the instances of apps and databases and configures it into metrics that can be used to monitor the infrastructure or produce visualised data for analysis.
+
+# <a name="how-to-run-project"> How to Run the Project </a>
 
 # <a name="multi-availability-zones"> Multi Availability Zones </a>
 ![](assets/readme-ca0f2051.png)
@@ -92,7 +109,7 @@ Advantages:
  To create an AMI we used two tools; CHEF and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
 
 
-### <a name="chef"> Chef </chef>
+### <a name="chef"> Chef </a>
 
  This is a configuration management tool for dealing with machine setup on physical servers, vm’s and in the cloud.
 
