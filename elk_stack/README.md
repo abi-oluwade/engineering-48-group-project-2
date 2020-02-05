@@ -83,6 +83,9 @@ logstash:
   hosts: ["0.0.0.0:5044"]
 ````
 
+### Integration tests for the CI pipeline
+- Integration tests were run both locally and on AWS for the Filebeat recipe.
+
 ## Collaborating with Git and GitHub
 - Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
 - Then merge on your local machine
