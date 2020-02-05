@@ -15,5 +15,5 @@ variable "app-ami-id" {
 
 variable "db-ami-id" {
   type = string
-  default = "ami-06a921b5d278c458b"
+  default = "ami-0c929d16bd02fe68b"
 }
