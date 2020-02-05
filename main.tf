@@ -24,7 +24,9 @@ module "app" {
   source = "./modules/app_tier"
   vpc_id = aws_vpc.app_vpc.id
   gateway_id = aws_internet_gateway.app_internet_gateway.id
-  db_instance-ip = module.db.db_instance-ip
+  db_instance_ip1 = module.db.db_instance_ip1
+  db_instance_ip2 = module.db.db_instance_ip2
+  db_instance_ip3 = module.db.db_instance_ip3
   name = var.Name
   app-ami = var.app-ami-id
   aws_lb_target_group-id = module.load_balancer.aws_lb_target_group-id
@@ -49,7 +51,7 @@ module "load_balancer" {
   app_subnet_one = module.app.app_subnet_one
   app_subnet_two = module.app.app_subnet_two
   app_subnet_three = module.app.app_subnet_three
-  db_instance-ip = module.db.db_instance-ip
+  db_instance_ip1 = module.db.db_instance_ip1
   #app_instance = module.app.app_instance
   #subnet_groups = module.app.subnet_groups
 }
