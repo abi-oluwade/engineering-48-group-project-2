@@ -13,13 +13,13 @@
 - The Architecture should be a "Highly Available" application.
 - Meaning that it has redundancies across all three availability zones. The application should connect to a single database instance.
 
-## Application Load Balancer
+## <a name="application-load-balancer"> Application Load Balancer </a>
 - Best suited for load balancing of HTTP and HTTPS traffic
 - Provides advanced request routing targeted at the delivery of modern application architectures
 
-## Components:
+## <a name="components"> Components: </a>
 
-### Load Balancer
+### <a name="load-balancer"> Load Balancer </a>
 A load balancer acts as the “traffic cop” sitting in front of your servers and routing client requests across all servers capable of fulfilling those requests in a manner that maximizes speed and capacity utilization and ensures that no one server is overworked, which could degrade performance. If a single server goes down, the load balancer redirects traffic to the remaining online servers. When a new server is added to the server group, the load balancer automatically starts to send requests to it.
 
 Funtions:
@@ -32,25 +32,25 @@ Advantages:
 - Ensures high availability and reliability by sending requests only to servers that are online.
 - Provides the flexibility to add or subtract servers as demand dictates.
 
-### Listener
+### <a name="listener"> Listener </a>
 - Check for connection requests from clients, using the configured protocol and port
 
-### Target group
+### <a name="target-group"> Target group </a>
 - Routes requests to one or more registered targets, using the specified protocol and port
 - Health check can also be configured
 
-## Auto Scaling
+## <a name="auto-scaling"> Auto Scaling </a>
 - Ensures you have the correct number of EC2 instances avilable to handle the load of your application
 
-## Highly Available application
+## <a name="highly-available-application"> Highly Available application </a>
 - Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
 
-## Set up
+## <a name="set-up"> Set up </a>
 - The load balancer resource is setup to redirect traffic to the app servers that are online. If there is a failure in the main availability zone then the primary app server will fail too. The downtime that will result from this is prevented by the autoscaling group.
 
 - We have created an autoscaling group resource on Terraform. This resource is configured to deploy minimum of 3 and maximum of 6 App instances across three availability zones. This means, in the case of a failure another app instance will get deployed and replaced the one that has failed. This makes our architecture "Highly Available".
 
- - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
+- To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
 
 # MongoDB Replica Set
 
