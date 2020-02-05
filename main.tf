@@ -51,7 +51,7 @@ module "load_balancer" {
   app_subnet_one = module.app.app_subnet_one
   app_subnet_two = module.app.app_subnet_two
   app_subnet_three = module.app.app_subnet_three
-  db_instance-ip = module.db.db_instance-ip
+  db_instance_ip1 = module.db.db_instance_ip1
   #app_instance = module.app.app_instance
   #subnet_groups = module.app.subnet_groups
 }
