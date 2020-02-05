@@ -50,10 +50,7 @@ module "load_balancer" {
   app_subnet_two = module.app.app_subnet_two
   app_subnet_three = module.app.app_subnet_three
   db_instance-ip = module.db.db_instance-ip
-<<<<<<< HEAD
   app_instance = module.app.app_autoscaling
-=======
   #app_instance = module.app.app_instance
->>>>>>> 03d58278deeaa176967149be14505be57353d133
   #subnet_groups = module.app.subnet_groups
 }
