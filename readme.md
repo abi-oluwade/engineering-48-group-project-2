@@ -1,10 +1,10 @@
 # Table of Contents
-* [Multi Availability Zones](#multi-availability-zones)
+1. [Multi Availability Zones](#multi-availability-zones)
     1. [Aim](#aim)
     2. []
-* [MongoDB Replica Set](#MongoDB-Replica-Set)
-* [ELK Stack](#ELK-Stack)
-* [GitHub](#GitHub)
+2. [MongoDB Replica Set](#MongoDB-Replica-Set)
+3. [ELK Stack](#ELK-Stack)
+4. [GitHub](#GitHub)
 
 # <a name="multi-availability-zones"> Multi Availability Zones </a>
 ![](assets/readme-ca0f2051.png)
