@@ -41,7 +41,13 @@ resource "aws_security_group" "db_security_group" {
     # Opening to 0.0.0.0/0 can lead to security vulnerabilities.
     security_groups = [var.app_security_group_id]
   }
-
+  ingress {
+    # TLS (change to whatever ports you need)
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    security_groups = [var.app_security_group_id]
+  }
   ingress {
     # TLS (change to whatever ports you need)
     from_port   = 27017
