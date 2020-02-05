@@ -66,7 +66,14 @@ resource "aws_security_group" "db_security_group" {
     name = "${var.name}_db"
   }
 }
-
+resource "aws_eip_association" "eip_assoc" {
+  instance_id = aws_instance.db_instance1.id
+  allocation_id = aws_eip.eip_db.id
+}
+resource "aws_eip" "eip_db" {
+  vpc = var.vpc_id
+  public_ip = "52.17.39.45"
+}
 # launch an instance
 resource "aws_instance" "db_instance1"{
   ami = var.db-ami
