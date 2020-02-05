@@ -1,12 +1,14 @@
 # Table of Contents
-1. [Multi Availability Zones](# Multi Availability Zones)
-2. [MongoDB Replica Set](# MongoDB Replica Set)
-3. [ELK Stack](# ELK Stack)
-4. [GitHub](# GitHub)
+* [Multi Availability Zones](#multi-availability-zones)
+    1. [Aim](#aim)
+    2. []
+* [MongoDB Replica Set](#MongoDB-Replica-Set)
+* [ELK Stack](#ELK-Stack)
+* [GitHub](#GitHub)
 
-# Multi Availability Zones
+# <a name="multi-availability-zones"> Multi Availability Zones </a>
 ![](assets/readme-ca0f2051.png)
-## Aim:
+## <a name="aim"> Aim: </a>
 - Using Terraform and AWS create a load balanced and auto scaled 2 tier architecture for the node example application.
 - The Architecture should be a "Highly Available" application.
 - Meaning that it has redundancies across all three availability zones. The application should connect to a single database instance.
@@ -15,9 +17,9 @@
 - Best suited for load balancing of HTTP and HTTPS traffic
 - Provides advanced request routing targeted at the delivery of modern application architectures
 
-### Components:
+## Components:
 
-#### Load Balancer
+### Load Balancer
 A load balancer acts as the “traffic cop” sitting in front of your servers and routing client requests across all servers capable of fulfilling those requests in a manner that maximizes speed and capacity utilization and ensures that no one server is overworked, which could degrade performance. If a single server goes down, the load balancer redirects traffic to the remaining online servers. When a new server is added to the server group, the load balancer automatically starts to send requests to it.
 
 Funtions:
@@ -30,10 +32,10 @@ Advantages:
 - Ensures high availability and reliability by sending requests only to servers that are online.
 - Provides the flexibility to add or subtract servers as demand dictates.
 
-#### Listener
+### Listener
 - Check for connection requests from clients, using the configured protocol and port
 
-#### Target group
+### Target group
 - Routes requests to one or more registered targets, using the specified protocol and port
 - Health check can also be configured
 
