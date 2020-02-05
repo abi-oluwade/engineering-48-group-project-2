@@ -19,10 +19,9 @@ resource "aws_autoscaling_group" "app_autoscaling" {
   launch_configuration = aws_launch_configuration.app_conf.name
   vpc_zone_identifier = [aws_subnet.public_one.id,aws_subnet.public_two.id,aws_subnet.public_three.id]
   target_group_arns = [var.aws_lb_target_group-id]
-
-  # tags = {
-  #  name = var.name
-  # }
+  tags = {
+   name = var.name
+ }
 }
 
 # create a subnet
