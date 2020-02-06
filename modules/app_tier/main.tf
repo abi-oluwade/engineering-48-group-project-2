@@ -161,7 +161,9 @@ resource "aws_security_group" "app_security_dm" {
 data  "template_file" "app_init" {
   template = "${file("./scripts/init_scripts.sh.tpl")}"
   vars = {
-    db-ip=var.db_instance-ip
+    db-ip1=var.db_instance_ip1
+    db-ip2=var.db_instance_ip2
+    db-ip3=var.db_instance_ip3
   }
 }
 
