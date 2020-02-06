@@ -115,25 +115,28 @@ Each of the ELK stack components has the own cookbooks saved in their individual
   - On the slave node in /home/jenkins create a `.aws` directory
   - In this directory create a `config` file and a `credentials` file
   - In the config file have something like:
-  ````
+
+````
 [default]
 region = eu-west-1
 output = json
-
-  ````
+````
   - In the `credentials` file have something like:
-  ````
+
+````
 [default]
 aws_access_key_id = <appropriate_access_key_id -- a combination of letters and numbers>
 aws_secret_access_key = <appropriate_secret_access_key -- a combination of letters and numbers>
-  ````
+````
+
 - To accept all chef licenses:
   - On the slave node in /home/jenkins create a `.chef` directory
   - In this directory create an `accepted_licenses` directory
   - In this directory create 4 files:
   - `chef_dk`, `chef_infra_client`, `chef_workstation`, `inspec`
   - In the chef_dk file have something like:
-  ````
+
+````
 ---
 id: chef-dk
 name: Chef Development Kit
@@ -142,9 +145,10 @@ accepting_product: chef-dk
 accepting_product_version: 4.7.73
 user: jenkins
 file_format: 1
-  ````
+````
 
   - In the chef_infra_client file have something like:
+
 ````
 ---
 id: infra-client
@@ -155,7 +159,9 @@ accepting_product_version: 15.7.32
 user: jenkins
 file_format: 1
 ````
+
   - The other files have a similar format:
+
   ````
   ---
   id: chef-workstation
@@ -167,6 +173,7 @@ file_format: 1
   file_format: 1
 
   ````
+
   ````
   ---
   id: inspec
