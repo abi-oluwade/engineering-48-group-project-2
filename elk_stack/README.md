@@ -100,10 +100,10 @@ logstash:
   - Not using this dashboard but filebeat index pattern in it
   - Loaded a filebeat index template into the elasticsearch
   - The ELK Server is now ready to receive filebeat data
-  
+
 ## Cookbooks
 Each of the ELK stack components has the own cookbooks saved in their individual repository on GitHub.
-- **Filebeat.**
+- **Filebeat.** (https://github.com/Daniel-Chow-YC/Eng-48-Filebeat)
 - **Elasticsearch.** 
 - **Logstash.** (https://github.com/harry-sparta/eng-48-logstash)
 - **Kibana.** (https://github.com/swatson2019/Eng-48-Kibana)
