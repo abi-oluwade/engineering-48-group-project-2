@@ -72,6 +72,10 @@ resource "aws_eip_association" "eip_assoc" {
   public_ip = "52.17.39.45"
 
 }
+# send template sh file
+data  "template_file" "db_init" {
+  template = "${file("./scripts/init_script_db.sh.tpl")}"
+}
 #resource "aws_eip" "eip_db" {
 #  vpc = var.vpc_id
 #  public_ip = "52.17.39.45"
@@ -96,6 +100,7 @@ resource "aws_instance" "db_instance2"{
   instance_type = "t2.micro"
   key_name = "Eng-48-common-key"
   associate_public_ip_address = true
+  user_data = data.template_file.db_init.rendered
   tags = {
     name = "${var.name}-db2"
   }
@@ -108,6 +113,7 @@ resource "aws_instance" "db_instance3"{
   instance_type = "t2.micro"
   key_name = "Eng-48-common-key"
   associate_public_ip_address = true
+  user_data = data.template_file.db_init.rendered
   tags = {
     name = "${var.name}-db3"
   }
