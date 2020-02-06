@@ -68,7 +68,7 @@ resource "aws_security_group" "db_security_group" {
 }
 resource "aws_eip_association" "eip_assoc" {
   instance_id = aws_instance.db_instance1.id
-  allocation_id = aws_eip.eip_db.id
+  #allocation_id = aws_eip.eip_db.id
   public_ip = "52.17.39.45"
 
 }
