@@ -49,6 +49,17 @@ The web app, the face of the architecture, has been made into three copies and p
 
 # <a name="how-to-run-project"> How to Run the Project </a>
 
+To make this architecture using your own machine, you should follow these steps:
+
+1. Clone this repository into a directory of your choice.
+
+2. Make sure that your machine has Terraform installed. It can be installed from [here](https://www.terraform.io/downloads.html).
+3. Open up the command line on your machine, and cd into the root directory of this project.
+4. Run the command `terraform init`. This will download configuration files that Terraform needs to run this code.
+5. Run the command `terraform apply` and type 'yes' when prompted. This will begin the construction of the architecture, with all of the app, database and ELK instances, as well as the subnets and all of the resources needed to link them.
+6. Once the build is complete, open up the AWS zone EU-West-1 and search for 'Eng48-app' in the Load Balancer tab. Copy the DNS for this load balancer and put it into your browser search bar. If you include '/posts' on the end of the DNS, it will take you to the posts page.
+7. Once finished, return to your command line and run the command `terraform destroy` to destroy the arcticecture and prevent excess running costs.
+
 # <a name="multi-availability-zones"> Multi Availability Zones </a>
 ![](assets/readme-ca0f2051.png)
 ## <a name="aim"> Aim: </a>
