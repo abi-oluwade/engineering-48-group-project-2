@@ -96,7 +96,7 @@ High availability refers to how likely your architecture is to operate for a lon
 
 - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
 
-- The app that is made on the autoscaled instances are from an AMI made in Packer. This image has the working app code, its tests, and the environment in which the app can run. The environment and app were provisioned in CHEF before turned into an image. Inside the CHEF cookbook, we included a filebeat cookbook which installs filebeat on the instance, and can then be used by the ELK stack to monitor the app. The repo for this AMI can be found [here](https://github.com/Rasmuskilp/nodejs_app).
+- The app that is made on the autoscaled instances are from an AMI made in Packer. This image has the working app code, its tests, and the environment in which the app can run. The environment and app were provisioned in Chef before turned into an image. Inside the Chef cookbook, we included a filebeat cookbook which installs filebeat on the instance, and can then be used by the ELK stack to monitor the app. The repo for this AMI can be found [here](https://github.com/Rasmuskilp/nodejs_app).
 
 # <a name="mongodb-replica-set"> MongoDB Replica Set </a>
 
@@ -108,14 +108,14 @@ High availability refers to how likely your architecture is to operate for a lon
 
 ## <a name="creating-an-ami"> Creating an Ami </a>
 
- To create an AMI we used two tools; CHEF and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
+ To create an AMI we used two tools; Chef and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
 
 
 ### <a name="chef"> Chef </a>
 
  This is a configuration management tool for dealing with machine setup on physical servers, vm’s and in the cloud.
 
- In this section we had installed CHEFDK on our machine and had to configure the path to access this tool.
+ In this section we had installed ChefDK on our machine and had to configure the path to access this tool.
 
 
  1. Creating the Cookbook:
@@ -137,7 +137,7 @@ High availability refers to how likely your architecture is to operate for a lon
 
  4. The recipe file is where we have inserted the commands to run the packages we need, for this project we have used; mongodb and filebeats (this will be taken from the separate repo created and wrapped in the cookbook)
 
- 5. Metadata.rb – the contents provide information that helps chef deploy cookbooks to each node.
+ 5. Metadata.rb – the contents provide information that helps Chef deploy cookbooks to each node.
 
  This is a dependency organiser. The wrapped cookbook will also be called here in order to get access to the github repo made to install filebeats.
 
@@ -178,7 +178,7 @@ High availability refers to how likely your architecture is to operate for a lon
 
  Here are the steps we followed to build packer:
 
- 1.	First created a packer.json file where we inserted the variables, builders (which is where all the AMI parametres go) and then provisioners is where you can integrate a shell script, anisble playbook or a chef cookbook for configuring a required app in the AMI.
+ 1.	First created a packer.json file where we inserted the variables, builders (which is where all the AMI parametres go) and then provisioners is where you can integrate a shell script, anisble playbook or a Chef cookbook for configuring a required app in the AMI.
 
  2.	You need to add a Berksfile and this is where the sources of the meta data are added in.
 
