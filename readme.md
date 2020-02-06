@@ -96,7 +96,7 @@ High availability refers to how likely your architecture is to operate for a lon
 
 - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
 
-- The app that is made on the autoscaled instances are from an AMI made in Packer. This image has the working app code, its tests, and the environment in which the app can run. The environment and app were provisioned in CHEF before turned into an image. Inside the CHEF cookbook, we included a filebeat cookbook which installs filebeat on the instance, and can then be used by the ELK stack to monitor the app.
+- The app that is made on the autoscaled instances are from an AMI made in Packer. This image has the working app code, its tests, and the environment in which the app can run. The environment and app were provisioned in CHEF before turned into an image. Inside the CHEF cookbook, we included a filebeat cookbook which installs filebeat on the instance, and can then be used by the ELK stack to monitor the app. The repo for this AMI can be found [here](https://github.com/Rasmuskilp/nodejs_app).
 
 # <a name="mongodb-replica-set"> MongoDB Replica Set </a>
 
