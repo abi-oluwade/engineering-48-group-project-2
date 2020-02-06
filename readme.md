@@ -8,14 +8,13 @@
 
 3. [Multi Availability Zones](#multi-availability-zones)
     1. [Aim](#aim)
-    2. [Application Load Balancer](#application-load-balancer)
-    3. [Components](#components)
+    2. [Components](#components)
         * [Load Balancer](#load-balancer)
         * [Listener](#listener)
         * [Target Group](#target-group)
-    4. [Auto Scaling](#auto-scaling)
-    5. [Highly Available Application](#highly-available-application)
-    6. [Set Up](#set-up)
+    3. [Auto Scaling](#auto-scaling)
+    4. [Highly Available Application](#highly-available-application)
+    5. [Set Up](#set-up)
 
 
 4. [MongoDB Replica Set](#mongodb-replica-set)
@@ -46,7 +45,7 @@
 # <a name="project"> The Project </a>
 This project's goal was to bring together everything we have learned in DevOps over the last six weeks, and to incorporate three new concepts into working infrastructure as code. We were tasked to create a terraform file that spins up a working NodeJS web app talking to a private database. This project combines those with the new concepts of multiple availability zones, MongoDB replica sets, and an ELK stack.
 
-The web app, the face of the architecture, has been made into three copies and put in three separate availability zones. The traffic to these apps is managed by a load balancer on the internet gateway, and autoscaling controls the number of instances that are live at one time depending on how much traffic is hitting the apps. These apps in turn talk to the MongoDB replica stack, housed inside one availability zone. This stack is a group of three replicated databases; one is the primary, the others are secondary. The web apps talk to the primary database, and if it goes down for whatever reason, one of the secondary databases will become the primary and take over the role. The status of the apps and the databases are monitored by the ELK stack. The ELK stack is made up of four components: Filebeats, Logstash, Elasticsearch, and Kibana. These parts form a structure that gathers data from the instances of apps and databases and configures it into metrics that can be used to monitor the infrastructure or produce visualised data for analysis.
+The web app, the face of the architecture, has been made into three copies and put in three separate availability zones. The traffic to these apps is managed by a load balancer on the internet gateway, and autoscaling controls the number of instances that are live at one time depending on how much traffic is hitting the apps. These apps in turn talk to the MongoDB replica stack. This stack is a group of three replicated databases housed in three separate availability zones; one is the primary, the others are secondary. The web apps talk to the primary database, and if it goes down for whatever reason, one of the secondary databases will become the primary and take over the role. The status of the apps and the databases are monitored by the ELK stack. The ELK stack is made up of four components: Filebeats, Logstash, Elasticsearch, and Kibana. These parts form a structure that gathers data from the instances of apps and databases and configures it into metrics that can be used to monitor the infrastructure or produce visualised data for analysis.
 
 # <a name="how-to-run-project"> How to Run the Project </a>
 
@@ -54,12 +53,8 @@ The web app, the face of the architecture, has been made into three copies and p
 ![](assets/readme-ca0f2051.png)
 ## <a name="aim"> Aim: </a>
 - Using Terraform and AWS create a load balanced and auto scaled 2 tier architecture for the node example application.
-- The Architecture should be a "Highly Available" application.
-- Meaning that it has redundancies across all three availability zones. The application should connect to a single database instance.
-
-## <a name="application-load-balancer"> Application Load Balancer </a>
-- Best suited for load balancing of HTTP and HTTPS traffic
-- Provides advanced request routing targeted at the delivery of modern application architectures
+- The Architecture should be a "Highly Available" application. This means that the architecture has redundancies across all three availability zones.
+- The application should connect to a single database instance in the replica stack.
 
 ## <a name="components"> Components: </a>
 
@@ -76,18 +71,23 @@ Advantages:
 - Ensures high availability and reliability by sending requests only to servers that are online.
 - Provides the flexibility to add or subtract servers as demand dictates.
 
+We decided to use an appliction load balancer instead of a network load balancer. This is because:
+- Best suited for load balancing of HTTP and HTTPS traffic
+- Provides advanced request routing targeted at the delivery of modern application architectures
+
 ### <a name="listener"> Listener </a>
-- Check for connection requests from clients, using the configured protocol and port
+ A listener is a process that checks for connection requests and works in tandem with the load balancer. It is configured with a protocol and a port for front-end connections, and a seperate protocol and port for back-end connections.
 
 ### <a name="target-group"> Target group </a>
-- Routes requests to one or more registered targets, using the specified protocol and port
-- Health check can also be configured
+A target group is used to route requests to one or more registered targets, using a specified protocol and port. This means that, combined with the listener, the load balancer will pick a target within a specific target group to send traffic to for one type of request. Different request types will have different target groups.
+
+ Health checks can also be configured for your load balancer on a per target group basis. After a target group has been specified, the load balancer continually monitors the health of all targets registered within the target group.
 
 ## <a name="auto-scaling"> Auto Scaling </a>
-- Ensures you have the correct number of EC2 instances avilable to handle the load of your application
+Autoscaling is a component that monitors applications and automatically adjusts capacity to meet and handle traffic to the apps. It will spin up and destroy instances when needed so that costs of running the architecture can be reduced by eliminating excess instances, while simultaneously maintaining keeping the apps operational in times of heavy load.
 
-## <a name="highly-available-application"> Highly Available application </a>
-- Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
+## <a name="highly-available-application"> Highly Available Application </a>
+High availability refers to how likely your architecture is to operate for a long time without failure. In our case here, this translates to accommodations for failure in the form of redundant components, which creates a safety net in the case of apps failing.
 
 ## <a name="set-up"> Set up </a>
 - The load balancer resource is setup to redirect traffic to the app servers that are online. If there is a failure in the main availability zone then the primary app server will fail too. The downtime that will result from this is prevented by the autoscaling group.
@@ -172,6 +172,7 @@ Advantages:
  -	Greater testability as after the machine image is built it can quickly launch and be smoke tested to verify that things appear to be working.
 
  -	This is good for standardized environments
+
 
  Here are the steps we followed to build packer:
 
