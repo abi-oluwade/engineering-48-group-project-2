@@ -25,8 +25,8 @@ module "app" {
   vpc_id = aws_vpc.app_vpc.id
   gateway_id = aws_internet_gateway.app_internet_gateway.id
   db_instance_ip1 = module.db.db_instance_ip1
-  db_instance_ip2 = module.db.db_instance_ip2
-  db_instance_ip3 = module.db.db_instance_ip3
+# db_instance_ip2 = module.db.db_instance_ip2
+# db_instance_ip3 = module.db.db_instance_ip3
   name = var.Name
   app-ami = var.app-ami-id
   aws_lb_target_group-id = module.load_balancer.aws_lb_target_group-id

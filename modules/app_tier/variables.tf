@@ -17,12 +17,12 @@ variable "app-ami" {
 variable "db_instance_ip1" {
   description = "ip of the db instance"
 }
-variable "db_instance_ip2" {
-  description = "ip of the db instance"
-}
-variable "db_instance_ip3" {
-  description = "ip of the db instance"
-}
+#variable "db_instance_ip2" {
+#  description = "ip of the db instance"
+#}
+#variable "db_instance_ip3" {
+#  description = "ip of the db instance"
+#}
 variable "public_subnet" {
 description = "A list of public subnets"
 type = list

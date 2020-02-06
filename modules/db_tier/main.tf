@@ -49,6 +49,13 @@ resource "aws_security_group" "db_security_group" {
     protocol    = "tcp"
     security_groups = [var.app_security_group_id]
   }
+  ingress {
+    # TLS (change to whatever ports you need)
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    security_groups = [var.app_security_group_id]
+  }
 
   egress {
     from_port       = 0
@@ -69,31 +76,36 @@ resource "aws_instance" "db_instance1"{
   instance_type = "t2.micro"
   key_name = "Eng-48-common-key"
   associate_public_ip_address = true
+  user_data = data.template_file.db_init.rendered
   tags = {
     name = "${var.name}-db1"
   }
 }
 
-resource "aws_instance" "db_instance2"{
-  ami = var.db-ami
-  subnet_id = aws_subnet.db_subnet2.id
-  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
-  instance_type = "t2.micro"
-  key_name = "Eng-48-common-key"
-  associate_public_ip_address = true
-  tags = {
-    name = "${var.name}-db2"
-  }
-}
+# resource "aws_instance" "db_instance2"{
+#  ami = var.db-ami
+#  subnet_id = aws_subnet.db_subnet2.id
+#  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
+#  instance_type = "t2.micro"
+#  key_name = "Eng-48-common-key"
+#  associate_public_ip_address = true
+#  tags = {
+#    name = "${var.name}-db2"
+#  }
+#}
 
-resource "aws_instance" "db_instance3"{
-  ami = var.db-ami
-  subnet_id = aws_subnet.db_subnet3.id
-  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
-  instance_type = "t2.micro"
-  key_name = "Eng-48-common-key"
-  associate_public_ip_address = true
-  tags = {
-    name = "${var.name}-db3"
-  }
+# resource "aws_instance" "db_instance3"{
+#  ami = var.db-ami
+#  subnet_id = aws_subnet.db_subnet3.id
+#  vpc_security_group_ids = ["${aws_security_group.db_security_group.id}"]
+#  instance_type = "t2.micro"
+#  key_name = "Eng-48-common-key"
+#  associate_public_ip_address = true
+#  tags = {
+#    name = "${var.name}-db3"
+#  }
+#}
+
+data  "template_file" "db_init" {
+  template = "${file("./scripts/init_scripts_db.sh.tpl")}"
 }
