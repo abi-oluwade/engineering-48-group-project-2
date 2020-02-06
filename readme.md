@@ -71,7 +71,7 @@ Advantages:
 - Ensures high availability and reliability by sending requests only to servers that are online.
 - Provides the flexibility to add or subtract servers as demand dictates.
 
-We decided to use an appliction load balancer instead of a network load balancer. This is because:
+We decided to use an application load balancer instead of a network load balancer. This is because:
 - Best suited for load balancing of HTTP and HTTPS traffic
 - Provides advanced request routing targeted at the delivery of modern application architectures
 
@@ -95,6 +95,8 @@ High availability refers to how likely your architecture is to operate for a lon
 - We have created an autoscaling group resource on Terraform. This resource is configured to deploy minimum of 3 and maximum of 6 App instances across three availability zones. This means, in the case of a failure another app instance will get deployed and replaced the one that has failed. This makes our architecture "Highly Available".
 
 - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
+
+- The app that is made on the autoscaled instances are from an AMI made in Packer. This image has the working app code, its tests, and the environment in which the app can run. The environment and app were provisioned in CHEF before turned into an image. Inside the CHEF cookbook, we included a filebeat cookbook which installs filebeat on the instance, and can then be used by the ELK stack to monitor the app. The repo for this AMI can be found [here](https://github.com/Rasmuskilp/nodejs_app).
 
 # <a name="mongodb-replica-set"> MongoDB Replica Set </a>
 
