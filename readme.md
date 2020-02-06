@@ -72,7 +72,7 @@ To make this architecture using your own machine, you should follow these steps:
 ### <a name="load-balancer"> Load Balancer </a>
 A load balancer acts as the “traffic cop” sitting in front of your servers and routing client requests across all servers capable of fulfilling those requests in a manner that maximizes speed and capacity utilization and ensures that no one server is overworked, which could degrade performance. If a single server goes down, the load balancer redirects traffic to the remaining online servers. When a new server is added to the server group, the load balancer automatically starts to send requests to it.
 
-Funtions:
+Functions:
 - Serves as the single point of contact for clients
 - Distributes incoming application traffic across multiple targets, in multiple Availability Zones
 - Increases availability of your application
@@ -189,7 +189,7 @@ High availability refers to how likely your architecture is to operate for a lon
 
  Here are the steps we followed to build packer:
 
- 1.	First created a packer.json file where we inserted the variables, builders (which is where all the AMI parametres go) and then provisioners is where you can integrate a shell script, anisble playbook or a Chef cookbook for configuring a required app in the AMI.
+ 1.	First created a packer.json file where we inserted the variables, builders (which is where all the AMI parametres go) and then provisioners is where you can integrate a shell script, ansible playbook or a Chef cookbook for configuring a required app in the AMI.
 
  2.	You need to add a Berksfile and this is where the sources of the meta data are added in.
 
