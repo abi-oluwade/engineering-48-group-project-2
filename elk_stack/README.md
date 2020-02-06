@@ -104,7 +104,76 @@ logstash:
 ## Cookbooks
 Each of the ELK stack components has the own cookbooks saved in their individual repository on GitHub.
 - **Filebeat.** (https://github.com/Daniel-Chow-YC/Eng-48-Filebeat)
-- **Elasticsearch.** 
+- **Elasticsearch.**
 - **Logstash.** (https://github.com/harry-sparta/eng-48-logstash)
 - **Kibana.** (https://github.com/swatson2019/Eng-48-Kibana)
 - **Nginx.** (https://github.com/swatson2019/Eng-48-Nginx)
+
+## CI Pipeline - Configuring Jenkins slave node to run Chef Kitchen tests
+- To be able to run `KITCHEN_YAML=kitchen.cloud.yml kitchen test` on Jenkins certain configurations were required to be made on the slave node.
+- To add AWS credentials and prevent an AWS credentials error:
+  - On the slave node in /home/jenkins create a `.aws` directory
+  - In this directory create a `config` file and a `credentials` file
+  - In the config file have something like:
+  ````
+[default]
+region = eu-west-1
+output = json
+
+  ````
+  - In the `credentials` file have something like:
+  ````
+[default]
+aws_access_key_id = <appropriate_access_key_id -- a combination of letters and numbers>
+aws_secret_access_key = <appropriate_secret_access_key -- a combination of letters and numbers>
+  ````
+- To accept all chef licenses:
+  - On the slave node in /home/jenkins create a `.chef` directory
+  - In this directory create an `accepted_licenses` directory
+  - In this directory create 4 files:
+  - `chef_dk`, `chef_infra_client`, `chef_workstation`, `inspec`
+  - In the chef_dk file have something like:
+  ````
+---
+id: chef-dk
+name: Chef Development Kit
+date_accepted: '2020-02-05T14:49:45+00:00'
+accepting_product: chef-dk
+accepting_product_version: 4.7.73
+user: jenkins
+file_format: 1
+  ````
+
+  - In the chef_infra_client file have something like:
+````
+---
+id: infra-client
+name: Chef Infra Client
+date_accepted: '2020-02-05T14:49:32+00:00'
+accepting_product: infra-client
+accepting_product_version: 15.7.32
+user: jenkins
+file_format: 1
+````
+  - The other files have a similar format:
+  ````
+  ---
+  id: chef-workstation
+  name: Chef Workstation
+  date_accepted: '2020-02-05T15:21:13+00:00'
+  accepting_product: chef-workstation
+  accepting_product_version: '15'
+  user: jenkins
+  file_format: 1
+
+  ````
+  ````
+  ---
+  id: inspec
+  name: Chef InSpec
+  date_accepted: '2020-02-05T14:49:32+00:00'
+  accepting_product: infra-client
+  accepting_product_version: 15.7.32
+  user: ubuntu
+  file_format: 1
+  ````
