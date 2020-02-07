@@ -57,7 +57,7 @@ To make this architecture using your own machine, you should follow these steps:
 3. Open up the command line on your machine, and cd into the root directory of this project.
 4. Run the command `terraform init`. This will download configuration files that Terraform needs to run this code.
 5. Run the command `terraform apply` and type 'yes' when prompted. This will begin the construction of the architecture, with all of the app, database and ELK instances, as well as the subnets and all of the resources needed to link them.
-6. Once the build is complete, open up the AWS zone EU-West-1 and search for 'Eng48-app' in the Load Balancer tab. Copy the DNS for this load balancer and put it into your browser search bar. If you include '/posts' on the end of the DNS, it will take you to the posts page.
+6. Once the build is complete, open up the AWS zone EU-West-1 and search for 'app-lb-eng48' in the Load Balancer tab. Copy the DNS for this load balancer and put it into your browser search bar. If you include '/posts' on the end of the DNS, it will take you to the posts page.
 7. Once finished, return to your command line and run the command `terraform destroy` to destroy the arcticecture and prevent excess running costs.
 
 # <a name="multi-availability-zones"> Multi Availability Zones </a>
@@ -252,10 +252,14 @@ High availability refers to how likely your architecture is to operate for a lon
 - It is installed as an agent on your servers
 - Filebeat monitors the log files or locations that you specify, collects log events, and forwards them to Logstash for indexing.
 
+[Filebeat cookbook](https://github.com/Daniel-Chow-YC/Eng-48-Filebeat)
+
 
 ### <a name="logstash"> Logstash </a>
 - Logstash is a tool to collect, process, and forward events and log messages.
 - Collects logs and events data. It even parses and transforms data.
+
+[Logstash cookbook](https://github.com/harry-sparta/eng-48-logstash)
 
 ### <a name="elasticsearch"> Elasticsearch </a>
 - Elasticsearch is a full-text, distributed, NoSQL database.
@@ -263,10 +267,14 @@ High availability refers to how likely your architecture is to operate for a lon
 - It uses JSON documents rather than schema or tables.
 - The transformed data from Logstash is stored and indexed into a database (Elasticsearch) and can be searched for (queried).
 
+[Elasticsearch cookbook](https://github.com/abi-oluwade/Eng-48-Elasticsearch )
+
 
 ### <a name="kibana"> Kibana </a>
 - Kibana is a data visualisation tool/dashboard (a web interface) which is hosted through Nginx or Apache.
 - Users can create bar, line and scatter plots, or pie charts and maps on top of large volumes of data.
+
+[Kibana cookbook](https://github.com/swatson2019/Eng-48-Kibana)
 
 ![alt text](https://www.guru99.com/images/tensorflow/082918_1504_ELKStackTut2.png)
 
