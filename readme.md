@@ -36,8 +36,7 @@
     3. [Elastic Stack (ELK Stack) for Our Project](#project-elk)
     4. [Installing the Elastic Stack (ELK Stack)](#elk-install)
         * [Installing Elasticsearch -- Cookbook](#elasticsearch-install)
-    5. [Collaborating with Git and GitHub](#githib-colab)
-    6. [General Guidline](#guidline)
+    5. [General Guidline](#guidline)
 
 
 6. [GitHub](#github)
@@ -117,7 +116,7 @@ High availability refers to how likely your architecture is to operate for a lon
 
  Below are the steps that we carried out in order to create this replica set.
 
-## <a name="creating-an-ami"> Creating an Ami </a>
+## <a name="creating-an-ami"> Creating an AMI </a>
 
  To create an AMI we used two tools; Chef and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
 
@@ -195,11 +194,11 @@ High availability refers to how likely your architecture is to operate for a lon
 
  3.	`berks install` - is the command would then create a berks lock file
 
- 4. `berks install` - this is where the dependencies of the package are added so the cookbook has all of them available.
+ 4. `berks vendor` - this is where the dependencies of the package are added so the cookbook has all of them available.
 
  5. You would then validate and build using the following commands:
 
-     - `packer validate [name of packerfile]`
+     - `packer validate [name of packer file]`
      - `Packer build [name of packer file]`
 
 ## <a name="mongodb-base-ami"> MongoDB Base AMI </a>
@@ -290,16 +289,6 @@ The requirement for **elasticsearch** and **logstash** is to first install Java.
 In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
 - Used online cookbook to install elastic search
-
-
-## <a name="github-colab"> Collaborating with Git and GitHub </a>
-- Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
-- Then merge on your local machine
-- Then push to GitHub
-- **So:**
-  - pull
-  - merge (locally)
-  - push
 
 ### <a name="guidline"> General guideline </a>
  - Downloaded Kibana dashboards and Beats index patterns
