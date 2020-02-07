@@ -251,10 +251,14 @@ High availability refers to how likely your architecture is to operate for a lon
 - It is installed as an agent on your servers
 - Filebeat monitors the log files or locations that you specify, collects log events, and forwards them to Logstash for indexing.
 
+[Filebeat cookbook](https://github.com/Daniel-Chow-YC/Eng-48-Filebeat)
+
 
 ### <a name="logstash"> Logstash </a>
 - Logstash is a tool to collect, process, and forward events and log messages.
 - Collects logs and events data. It even parses and transforms data.
+
+[Logstash cookbook](https://github.com/harry-sparta/eng-48-logstash)
 
 ### <a name="elasticsearch"> Elasticsearch </a>
 - Elasticsearch is a full-text, distributed, NoSQL database.
@@ -262,10 +266,14 @@ High availability refers to how likely your architecture is to operate for a lon
 - It uses JSON documents rather than schema or tables.
 - The transformed data from Logstash is stored and indexed into a database (Elasticsearch) and can be searched for (queried).
 
+[Elasticsearch cookbook](https://github.com/abi-oluwade/Eng-48-Elasticsearch )
+
 
 ### <a name="kibana"> Kibana </a>
 - Kibana is a data visualisation tool/dashboard (a web interface) which is hosted through Nginx or Apache.
 - Users can create bar, line and scatter plots, or pie charts and maps on top of large volumes of data.
+
+[Kibana cookbook](https://github.com/swatson2019/Eng-48-Kibana)
 
 ![alt text](https://www.guru99.com/images/tensorflow/082918_1504_ELKStackTut2.png)
 
