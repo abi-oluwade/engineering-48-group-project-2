@@ -1,3 +1,3 @@
 #!/bin/bash
-sudo rs.slaveOk()
+mongo --eval rs.slaveOk()
 const client = new MongoClient(mongoURL + "?readPreference=primaryPreferred", { useUnifiedTopology: true, useNewUrlParser: true });
