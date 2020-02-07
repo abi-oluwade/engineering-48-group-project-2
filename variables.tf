@@ -10,10 +10,10 @@ variable "db_name" {
 
 variable "app-ami-id" {
   type = string
-  default = "ami-069660bbc68c65156"
+  default = "ami-0435fbee126540ee8"
 }
 
 variable "db-ami-id" {
   type = string
-  default = "ami-04e98abc374afb4a3"
+  default = "ami-0539462ffe4ebd5ef"
 }

@@ -241,10 +241,11 @@ High availability refers to how likely your architecture is to operate for a lon
 - They are all developed, managed and maintained by the company Elastic.
 
 ## <a name="elk"> Elastic stack: </a>
-- Elasticsearch
-- Logstash
-- Kibana
 - Filebeat
+- Logstash
+- Elasticsearch
+- Kibana
+
 
 ### <a name="filebeat"> Filebeat </a>
 - Filebeat is a lightweight shipper for forwarding and centralizing log data.
