@@ -8,14 +8,13 @@
 
 3. [Multi Availability Zones](#multi-availability-zones)
     1. [Aim](#aim)
-    2. [Application Load Balancer](#application-load-balancer)
-    3. [Components](#components)
+    2. [Components](#components)
         * [Load Balancer](#load-balancer)
         * [Listener](#listener)
         * [Target Group](#target-group)
-    4. [Auto Scaling](#auto-scaling)
-    5. [Highly Available Application](#highly-available-application)
-    6. [Set Up](#set-up)
+    3. [Auto Scaling](#auto-scaling)
+    4. [Highly Available Application](#highly-available-application)
+    5. [Set Up](#set-up)
 
 
 4. [MongoDB Replica Set](#mongodb-replica-set)
@@ -37,8 +36,7 @@
     3. [Elastic Stack (ELK Stack) for Our Project](#project-elk)
     4. [Installing the Elastic Stack (ELK Stack)](#elk-install)
         * [Installing Elasticsearch -- Cookbook](#elasticsearch-install)
-    5. [Collaborating with Git and GitHub](#githib-colab)
-    6. [General Guidline](#guidline)
+    5. [General Guidline](#guidline)
 
 
 6. [GitHub](#github)
@@ -46,20 +44,27 @@
 # <a name="project"> The Project </a>
 This project's goal was to bring together everything we have learned in DevOps over the last six weeks, and to incorporate three new concepts into working infrastructure as code. We were tasked to create a terraform file that spins up a working NodeJS web app talking to a private database. This project combines those with the new concepts of multiple availability zones, MongoDB replica sets, and an ELK stack.
 
-The web app, the face of the architecture, has been made into three copies and put in three separate availability zones. The traffic to these apps is managed by a load balancer on the internet gateway, and autoscaling controls the number of instances that are live at one time depending on how much traffic is hitting the apps. These apps in turn talk to the MongoDB replica stack, housed inside one availability zone. This stack is a group of three replicated databases; one is the primary, the others are secondary. The web apps talk to the primary database, and if it goes down for whatever reason, one of the secondary databases will become the primary and take over the role. The status of the apps and the databases are monitored by the ELK stack. The ELK stack is made up of four components: Filebeats, Logstash, Elasticsearch, and Kibana. These parts form a structure that gathers data from the instances of apps and databases and configures it into metrics that can be used to monitor the infrastructure or produce visualised data for analysis.
+The web app, the face of the architecture, has been made into three copies and put in three separate availability zones. The traffic to these apps is managed by a load balancer on the internet gateway, and autoscaling controls the number of instances that are live at one time depending on how much traffic is hitting the apps. These apps in turn talk to the MongoDB replica stack. This stack is a group of three replicated databases housed in three separate availability zones; one is the primary, the others are secondary. The web apps talk to the primary database, and if it goes down for whatever reason, one of the secondary databases will become the primary and take over the role. The status of the apps and the databases are monitored by the ELK stack. The ELK stack is made up of four components: Filebeats, Logstash, Elasticsearch, and Kibana. These parts form a structure that gathers data from the instances of apps and databases and configures it into metrics that can be used to monitor the infrastructure or produce visualised data for analysis.
 
 # <a name="how-to-run-project"> How to Run the Project </a>
+
+To make this architecture using your own machine, you should follow these steps:
+
+1. Clone this repository into a directory of your choice.
+
+2. Make sure that your machine has Terraform installed. It can be installed from [here](https://www.terraform.io/downloads.html).
+3. Open up the command line on your machine, and cd into the root directory of this project.
+4. Run the command `terraform init`. This will download configuration files that Terraform needs to run this code.
+5. Run the command `terraform apply` and type 'yes' when prompted. This will begin the construction of the architecture, with all of the app, database and ELK instances, as well as the subnets and all of the resources needed to link them.
+6. Once the build is complete, open up the AWS zone EU-West-1 and search for 'app-lb-eng48' in the Load Balancer tab. Copy the DNS for this load balancer and put it into your browser search bar. If you include '/posts' on the end of the DNS, it will take you to the posts page. The repo of the app can be found [here](https://github.com/spartaglobal/node-sample-app).
+7. Once finished, return to your command line and run the command `terraform destroy` to destroy the arcticecture and prevent excess running costs.
 
 # <a name="multi-availability-zones"> Multi Availability Zones </a>
 ![](assets/readme-ca0f2051.png)
 ## <a name="aim"> Aim: </a>
 - Using Terraform and AWS create a load balanced and auto scaled 2 tier architecture for the node example application.
-- The Architecture should be a "Highly Available" application.
-- Meaning that it has redundancies across all three availability zones. The application should connect to a single database instance.
-
-## <a name="application-load-balancer"> Application Load Balancer </a>
-- Best suited for load balancing of HTTP and HTTPS traffic
-- Provides advanced request routing targeted at the delivery of modern application architectures
+- The Architecture should be a "Highly Available" application. This means that the architecture has redundancies across all three availability zones.
+- The application should connect to a single database instance in the replica stack.
 
 ## <a name="components"> Components: </a>
 
@@ -76,18 +81,23 @@ Advantages:
 - Ensures high availability and reliability by sending requests only to servers that are online.
 - Provides the flexibility to add or subtract servers as demand dictates.
 
+We decided to use an application load balancer instead of a network load balancer. This is because:
+- Best suited for load balancing of HTTP and HTTPS traffic
+- Provides advanced request routing targeted at the delivery of modern application architectures
+
 ### <a name="listener"> Listener </a>
-- Check for connection requests from clients, using the configured protocol and port
+ A listener is a process that checks for connection requests and works in tandem with the load balancer. It is configured with a protocol and a port for front-end connections, and a seperate protocol and port for back-end connections.
 
 ### <a name="target-group"> Target group </a>
-- Routes requests to one or more registered targets, using the specified protocol and port
-- Health check can also be configured
+A target group is used to route requests to one or more registered targets, using a specified protocol and port. This means that, combined with the listener, the load balancer will pick a target within a specific target group to send traffic to for one type of request. Different request types will have different target groups.
+
+ Health checks can also be configured for your load balancer on a per target group basis. After a target group has been specified, the load balancer continually monitors the health of all targets registered within the target group.
 
 ## <a name="auto-scaling"> Auto Scaling </a>
-- Ensures you have the correct number of EC2 instances avilable to handle the load of your application
+Autoscaling is a component that monitors applications and automatically adjusts capacity to meet and handle traffic to the apps. It will spin up and destroy instances when needed so that costs of running the architecture can be reduced by eliminating excess instances, while simultaneously maintaining keeping the apps operational in times of heavy load.
 
-## <a name="highly-available-application"> Highly Available application </a>
-- Creating your architecture in such a way that your 'system' is always available - or has the least amount of downtime as possible
+## <a name="highly-available-application"> Highly Available Application </a>
+High availability refers to how likely your architecture is to operate for a long time without failure. In our case here, this translates to accommodations for failure in the form of redundant components, which creates a safety net in the case of apps failing.
 
 ## <a name="set-up"> Set up </a>
 - The load balancer resource is setup to redirect traffic to the app servers that are online. If there is a failure in the main availability zone then the primary app server will fail too. The downtime that will result from this is prevented by the autoscaling group.
@@ -95,6 +105,8 @@ Advantages:
 - We have created an autoscaling group resource on Terraform. This resource is configured to deploy minimum of 3 and maximum of 6 App instances across three availability zones. This means, in the case of a failure another app instance will get deployed and replaced the one that has failed. This makes our architecture "Highly Available".
 
 - To allow the spin up of minimum three instances in multiple availability zones, we have created and configured three subnets, each having three route table associations.
+
+- The app that is made on the autoscaled instances are from an AMI made in Packer. This image has the working app code, its tests, and the environment in which the app can run. The environment and app were provisioned in Chef before turned into an image. Inside the Chef cookbook, we included a filebeat cookbook which installs filebeat on the instance, and can then be used by the ELK stack to monitor the app. The repo for this AMI can be found [here](https://github.com/Rasmuskilp/nodejs_app).
 
 # <a name="mongodb-replica-set"> MongoDB Replica Set </a>
 
@@ -104,16 +116,16 @@ Advantages:
 
  Below are the steps that we carried out in order to create this replica set.
 
-## <a name="creating-an-ami"> Creating an Ami </a>
+## <a name="creating-an-ami"> Creating an AMI </a>
 
- To create an AMI we used two tools; CHEF and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
+ To create an AMI we used two tools; Chef and Packer. The purpose of using an AMI is so that standardization occurs throughout all the instances we are using for MongoDB.
 
 
 ### <a name="chef"> Chef </a>
 
  This is a configuration management tool for dealing with machine setup on physical servers, vm’s and in the cloud.
 
- In this section we had installed CHEFDK on our machine and had to configure the path to access this tool.
+ In this section we had installed ChefDK on our machine and had to configure the path to access this tool.
 
 
  1. Creating the Cookbook:
@@ -135,7 +147,7 @@ Advantages:
 
  4. The recipe file is where we have inserted the commands to run the packages we need, for this project we have used; mongodb and filebeats (this will be taken from the separate repo created and wrapped in the cookbook)
 
- 5. Metadata.rb – the contents provide information that helps chef deploy cookbooks to each node.
+ 5. Metadata.rb – the contents provide information that helps Chef deploy cookbooks to each node.
 
  This is a dependency organiser. The wrapped cookbook will also be called here in order to get access to the github repo made to install filebeats.
 
@@ -173,19 +185,20 @@ Advantages:
 
  -	This is good for standardized environments
 
+
  Here are the steps we followed to build packer:
 
- 1.	First created a packer.json file where we inserted the variables, builders (which is where all the AMI parametres go) and then provisioners is where you can integrate a shell script, anisble playbook or a chef cookbook for configuring a required app in the AMI.
+ 1.	First created a packer.json file where we inserted the variables, builders (which is where all the AMI parametres go) and then provisioners is where you can integrate a shell script, anisble playbook or a Chef cookbook for configuring a required app in the AMI.
 
  2.	You need to add a Berksfile and this is where the sources of the meta data are added in.
 
  3.	`berks install` - is the command would then create a berks lock file
 
- 4. `berks install` - this is where the dependencies of the package are added so the cookbook has all of them available.
+ 4. `berks vendor` - this is where the dependencies of the package are added so the cookbook has all of them available.
 
  5. You would then validate and build using the following commands:
 
-     - `packer validate [name of packerfile]`
+     - `packer validate [name of packer file]`
      - `Packer build [name of packer file]`
 
 ## <a name="mongodb-base-ami"> MongoDB Base AMI </a>
@@ -227,20 +240,25 @@ Advantages:
 - They are all developed, managed and maintained by the company Elastic.
 
 ## <a name="elk"> Elastic stack: </a>
-- Elasticsearch
-- Logstash
-- Kibana
 - Filebeat
+- Logstash
+- Elasticsearch
+- Kibana
+
 
 ### <a name="filebeat"> Filebeat </a>
 - Filebeat is a lightweight shipper for forwarding and centralizing log data.
 - It is installed as an agent on your servers
 - Filebeat monitors the log files or locations that you specify, collects log events, and forwards them to Logstash for indexing.
 
+[Filebeat cookbook](https://github.com/Daniel-Chow-YC/Eng-48-Filebeat)
+
 
 ### <a name="logstash"> Logstash </a>
 - Logstash is a tool to collect, process, and forward events and log messages.
 - Collects logs and events data. It even parses and transforms data.
+
+[Logstash cookbook](https://github.com/harry-sparta/eng-48-logstash)
 
 ### <a name="elasticsearch"> Elasticsearch </a>
 - Elasticsearch is a full-text, distributed, NoSQL database.
@@ -248,10 +266,14 @@ Advantages:
 - It uses JSON documents rather than schema or tables.
 - The transformed data from Logstash is stored and indexed into a database (Elasticsearch) and can be searched for (queried).
 
+[Elasticsearch cookbook](https://github.com/abi-oluwade/Eng-48-Elasticsearch )
+
 
 ### <a name="kibana"> Kibana </a>
 - Kibana is a data visualisation tool/dashboard (a web interface) which is hosted through Nginx or Apache.
 - Users can create bar, line and scatter plots, or pie charts and maps on top of large volumes of data.
+
+[Kibana cookbook](https://github.com/swatson2019/Eng-48-Kibana)
 
 ![alt text](https://www.guru99.com/images/tensorflow/082918_1504_ELKStackTut2.png)
 
@@ -267,16 +289,6 @@ The requirement for **elasticsearch** and **logstash** is to first install Java.
 In cookbook:
 - Prerequisite - installed java package `openjdk-8-jdk`
 - Used online cookbook to install elastic search
-
-
-## <a name="github-colab"> Collaborating with Git and GitHub </a>
-- Before you merge a branch on your local machine, pull the branch you plan to merge to, from GitHub.
-- Then merge on your local machine
-- Then push to GitHub
-- **So:**
-  - pull
-  - merge (locally)
-  - push
 
 ### <a name="guidline"> General guideline </a>
  - Downloaded Kibana dashboards and Beats index patterns
